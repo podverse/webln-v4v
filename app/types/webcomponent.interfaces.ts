@@ -4,7 +4,7 @@
  *
  * Create your node module (library) with this user friendly boilerplate. Use this respository as template for your new node library/module
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ * @contributors: Mitch Downey [@mitchdowney] <contact@podverse.fm> (https://github.com/mitchdowney)
  *
  * @license: MIT License
  *
@@ -21,7 +21,7 @@ export interface ModuleInterface {
 	 * =====================
 	 * Set text
 	 *
-	 * @interface [ModuleInterface](https://github.com/ptkdev-boilerplate/svelte-webcomponent-boilerplate/blob/main/app/webcomponent/types/module.interfaces.ts)
+	 * @interface [ModuleInterface](https://github.com/podverse/lnurl-widget/blob/main/app/webcomponent/types/module.interfaces.ts)
 	 *
 	 * @param {string} text - input text
 	 *
@@ -40,7 +40,7 @@ export interface ModuleResponseInterface {
 	 * =====================
 	 * Get text
 	 *
-	 * @interface [ModuleResponseInterface](https://github.com/ptkdev-boilerplate/svelte-webcomponent-boilerplate/blob/main/app/webcomponent/types/module.interfaces.ts)
+	 * @interface [ModuleResponseInterface](https://github.com/podverse/lnurl-widget/blob/main/app/webcomponent/types/module.interfaces.ts)
 	 *
 	 * @return {fn} string - run app() for output text
 	 *

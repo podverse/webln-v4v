@@ -4,7 +4,7 @@
  *
  * Show hello world text
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ * @contributors: Mitch Downey [@mitchdowney] <contact@podverse.fm> (https://github.com/mitchdowney)
  *
  * @license: MIT License
  *
@@ -17,7 +17,7 @@ import type { ModuleInterface, ModuleResponseInterface } from "@app/types/webcom
  *
  * Print hello-world
  *
- * @interface [ModuleInterface ModuleResponseInterface](https://github.com/ptkdev-boilerplate/svelte-webcomponent-boilerplate/blob/main/app/webcomponent/types/module.interfaces.ts)
+ * @interface [ModuleInterface ModuleResponseInterface](https://github.com/podverse/lnurl-widget/blob/main/app/webcomponent/types/module.interfaces.ts)
  *
  * @param {string} {text} - input string
  *

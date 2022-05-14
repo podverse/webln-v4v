@@ -2,8 +2,8 @@
 	"contributions": {
 		"language": "English",
 		"license": "CC BY 4.0",
-		"contributors": ["Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)"]
+		"contributors": ["Mitch Downey [@mitchdowney] <contact@podverse.fm> (https://github.com/mitchdowney)"]
 	},
-	"app_name": "svelte-webcomponent-boilerplate",
+	"app_name": "lnurl-widget",
 	"hello": "Hello {{name}}!"
 }

@@ -1,13 +1,13 @@
 {
-	"name": "@ptkdev/svelte-webcomponent-boilerplate",
-	"displayName": "Svelte WebComponent Boilerplate",
-	"description": "Create your HTML5 Web Component with Svelte. Made your web components with this user friendly boilerplate",
-	"version": "2.0.1",
+	"name": "@podverse/lnurl-widget",
+	"displayName": "LNURL on-page widget",
+	"description": "A library for rendering a basic, draggable UI widget for sending Bitcoin Lightning payments with an LNURL compatible browser extension",
+	"version": "1.0.0",
 	"main": "dist/webcomponent.js",
 	"publishConfig": {
 		"access": "public"
 	},
-	"author": "Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)",
+	"author": "Mitch Downey [@mitchdowney] <contact@podverse.fm> (https://github.com/mitchdowney)",
 	"authorUrl": "https://ptk.dev",
 	"license": "MIT",
 	"license-docs": "CC BY 4.0",
@@ -16,10 +16,10 @@
 	"homepage": "https://codepen.io/ptkdev/pen/jOyNmEQ",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ptkdev-boilerplate/svelte-webcomponent-boilerplate.git"
+		"url": "https://github.com/podverse/lnurl-widget.git"
 	},
 	"bugs": {
-		"url": "https://github.com/ptkdev-boilerplate/svelte-webcomponent-boilerplate/issues"
+		"url": "https://github.com/podverse/lnurl-widget/issues"
 	},
 	"engines": {
 		"node": ">=14.0.0"
@@ -35,7 +35,7 @@
 		"lint": "npm run lint-prettify && eslint . --cache --ext .ts,.js",
 		"lint-fix": "npm run lint-prettify && eslint . --cache --ext .ts,.js --fix",
 		"lint-prettify": "prettier --write --ignore-unknown '**/*.{ts,scss,md,json}'",
-		"git-set-upstream": "git remote add upstream git@github.com:ptkdev-boilerplate/svelte-webcomponent-boilerplate.git && git fetch upstream",
+		"git-set-upstream": "git remote add upstream git@github.com:ptkdev-boilerplate/lnurl-widget.git && git fetch upstream",
 		"git-pull-upstream": "git pull upstream main && git pull upstream beta && git pull upstream nightly",
 		"git-pull": "git pull --recursive",
 		"git-hash": "ts-node scripts/githash.ts",

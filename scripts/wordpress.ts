@@ -3,7 +3,7 @@
  * Wordpress Package
  * =====================
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ * @contributors: Mitch Downey [@mitchdowney] <contact@podverse.fm> (https://github.com/mitchdowney)
  *
  * @license: MIT License
  *
@@ -22,16 +22,16 @@ nunjucks.configure({
 let html = nunjucks.render(`${__dirname}/../wordpress/readme.txt`, { package: pkg });
 fs.writeFileSync(`${__dirname}/../dist/readme.txt`, html, "utf8");
 
-html = nunjucks.render(`${__dirname}/../wordpress/svelte_webcomponent_boilerplate.php`, { package: pkg });
-fs.writeFileSync(`${__dirname}/../dist/svelte_webcomponent_boilerplate.php`, html, "utf8");
+html = nunjucks.render(`${__dirname}/../wordpress/lnurl_widget.php`, { package: pkg });
+fs.writeFileSync(`${__dirname}/../dist/lnurl_widget.php`, html, "utf8");
 
-shell.mkdir("-p", `${__dirname}/../build/${pkg.name.replace("@ptkdev/", "")}/`);
+shell.mkdir("-p", `${__dirname}/../build/${pkg.name.replace("@podverse/", "")}/`);
 shell.mkdir("-p", `${__dirname}/../dist/wordpress/`);
-shell.cp("-R", `${__dirname}/../dist/*`, `${__dirname}/../build/${pkg.name.replace("@ptkdev/", "")}/`);
+shell.cp("-R", `${__dirname}/../dist/*`, `${__dirname}/../build/${pkg.name.replace("@podverse/", "")}/`);
 
-shell.rm("-r", `${__dirname}/../build/${pkg.name.replace("@ptkdev/", "")}/wordpress`);
-shell.exec(`cd build && zip -r ../dist/wordpress/${pkg.name.replace("@ptkdev/", "")}-wordpress-plugin.zip .`);
+shell.rm("-r", `${__dirname}/../build/${pkg.name.replace("@podverse/", "")}/wordpress`);
+shell.exec(`cd build && zip -r ../dist/wordpress/${pkg.name.replace("@podverse/", "")}-wordpress-plugin.zip .`);
 
 shell.rm("-r", `${__dirname}/../build`);
-shell.rm("-r", `${__dirname}/../dist/svelte_webcomponent_boilerplate.php`);
+shell.rm("-r", `${__dirname}/../dist/lnurl_widget.php`);
 shell.rm("-r", `${__dirname}/../dist/readme.txt`);

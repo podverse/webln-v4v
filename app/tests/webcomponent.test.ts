@@ -2,7 +2,7 @@
  * Jest Tests
  * =====================
  *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ * @contributors: Mitch Downey [@mitchdowney] <contact@podverse.fm> (https://github.com/mitchdowney)
  *
  * @license: MIT License
  *

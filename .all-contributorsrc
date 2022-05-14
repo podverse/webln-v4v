@@ -1,6 +1,6 @@
 {
-	"projectName": "ptkdev-boilerplate/svelte-webcomponent-boilerplate",
-	"projectOwner": "ptkdev",
+	"projectName": "podverse/lnurl-widget",
+	"projectOwner": "podverse",
 	"repoType": "github",
 	"repoHost": "https://github.com",
 	"files": ["README.md"],
@@ -8,11 +8,11 @@
 	"commit": true,
 	"contributors": [
 		{
-			"login": "ptkdev",
-			"name": "Patryk Rzucidło",
-			"avatar_url": "https://avatars1.githubusercontent.com/u/442844?v=4",
-			"profile": "https://ptk.dev",
-			"contributions": ["code", "translation", "doc", "bug"]
+			"login": "mitchdowney",
+			"name": "Mitch Downey",
+			"avatar_url": "https://avatars.githubusercontent.com/u/2262919?s=120&v=4",
+			"profile": "https://github.com/mitchdowney",
+			"contributions": ["code", "doc", "bug"]
 		}
 	],
 	"contributorsPerLine": 6,

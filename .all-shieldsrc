@@ -8,7 +8,7 @@
 			"id": "header-badges",
 			"badges": [
 				{
-					"url": "https://github.com/ptkdev-boilerplate/svelte-webcomponent-boilerplate/blob/main/CHANGELOG.md",
+					"url": "https://github.com/podverse/lnurl-widget/blob/main/CHANGELOG.md",
 					"color": "lightgray",
 					"label": "version",
 					"message": "v{{version}}",
@@ -18,16 +18,16 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://www.npmjs.com/package/@ptkdev/svelte-webcomponent-boilerplate",
+					"url": "https://www.npmjs.com/package/@podverse/lnurl-widget",
 					"color": "#CC3534",
 					"label": "npm",
 					"logo": "npm",
 					"style": "flat",
-					"custom": "/npm/v/@ptkdev/svelte-webcomponent-boilerplate?color=CC3534&logo=npm",
+					"custom": "/npm/v/@podverse/lnurl-widget?color=CC3534&logo=npm",
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev-boilerplate/svelte-webcomponent-boilerplate/blob/main/LICENSE.md",
+					"url": "https://github.com/podverse/lnurl-widget/blob/main/LICENSE.md",
 					"color": "brightgreen",
 					"label": "license",
 					"message": "{{license}}",
@@ -65,12 +65,6 @@
 					"style": "flat",
 					"logo": "javascript",
 					"platform": "shields"
-				},
-				{
-					"url": "https://discord.ptkdev.io",
-					"server_id": "383373985666301975",
-					"title": "Discord Server",
-					"platform": "discord"
 				}
 			]
 		},
@@ -78,7 +72,7 @@
 			"id": "sponsors-badges",
 			"badges": [
 				{
-					"url": "https://www.paypal.me/ptkdev",
+					"url": "https://www.paypal.com/donate?hosted_button_id=YKMNUDUCRTUPC",
 					"color": "#005EA6",
 					"label": "donate",
 					"message": "paypal",
@@ -88,27 +82,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://ko-fi.com/ptkdev",
-					"color": "#29abe0",
-					"label": "donate",
-					"message": "ko-fi",
-					"title": "Donate Ko-Fi",
-					"style": "for-the-badge",
-					"logo": "ko-fi",
-					"platform": "shields"
-				},
-				{
-					"url": "https://github.com/sponsors/ptkdev",
-					"color": "#ea4aaa",
-					"label": "donate",
-					"message": "sponsors",
-					"title": "Donate Github Sponsors",
-					"style": "for-the-badge",
-					"logo": "github",
-					"platform": "shields"
-				},
-				{
-					"url": "https://www.patreon.com/join/ptkdev",
+					"url": "https://www.patreon.com/podverse",
 					"color": "#F87668",
 					"label": "donate",
 					"message": "patreon",
@@ -121,20 +95,10 @@
 					"url": "https://ptk.dev/img/icons/menu/bitcoin_wallet.png",
 					"color": "#E38B29",
 					"label": "BTC",
-					"message": "35jQmZCy4nsxoMM3QPFrnZePDVhdKaHMRH",
+					"message": "bc1qqme0tj5gutgujsz62xqcfc6emfgm5wky27zc30",
 					"title": "Donate Bitcoin",
 					"style": "flat-square",
 					"logo": "bitcoin",
-					"platform": "shields"
-				},
-				{
-					"url": "https://ptk.dev/img/icons/menu/ethereum_wallet.png",
-					"color": "#4E8EE9",
-					"label": "ETH",
-					"message": "0x8b8171661bEb032828e82baBb0B5B98Ba8fBEBFc",
-					"title": "Donate Ethereum",
-					"style": "flat-square",
-					"logo": "ethereum",
 					"platform": "shields"
 				}
 			]
@@ -157,7 +121,7 @@
 			"id": "projects-badges2",
 			"badges": [
 				{
-					"url": "https://github.com/ptkdev/ptkdev-logger",
+					"url": "https://github.com/podverse/lnurl-widget-logger",
 					"color": "#9b59b6",
 					"label": "🦒 Tools",
 					"message": "Node Logger",
@@ -166,7 +130,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev/all-shields-cli",
+					"url": "https://github.com/podverse/all-shields-cli",
 					"color": "#9b59b6",
 					"label": "🦌 Tools",
 					"message": "All Shields CLI",
@@ -175,7 +139,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev/chrome-extension-aspectratio219",
+					"url": "https://github.com/podverse/chrome-extension-aspectratio219",
 					"color": "#9b59b6",
 					"label": "🖥️ Tools",
 					"message": "Aspect Ratio 21:9",
@@ -193,7 +157,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev/json-token-replace",
+					"url": "https://github.com/podverse/json-token-replace",
 					"color": "#9b59b6",
 					"label": "🐾 Tools",
 					"message": "JSON Token Replace",
@@ -202,7 +166,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev/eslint-plugin-snakecasejs",
+					"url": "https://github.com/podverse/eslint-plugin-snakecasejs",
 					"color": "#9b59b6",
 					"label": "🐍 Tools",
 					"message": "ESLint: snakecasejs",
@@ -216,7 +180,7 @@
 			"id": "projects-badges3",
 			"badges": [
 				{
-					"url": "https://github.com/ptkdev-components",
+					"url": "https://github.com/podverse-components",
 					"color": "#e74c3c",
 					"label": "🚧 WebComponents",
 					"message": "My Collection",
@@ -225,7 +189,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev/aboutmeinfo-telegram-bot",
+					"url": "https://github.com/podverse/aboutmeinfo-telegram-bot",
 					"color": "#1FA0F2",
 					"label": "🔖 Bot",
 					"message": "AboutMeInfo",
@@ -234,7 +198,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev/quizquickanswer-telegram-game-bot",
+					"url": "https://github.com/podverse/quizquickanswer-telegram-game-bot",
 					"color": "#FEC91A",
 					"label": "⏱ Bot",
 					"message": "QuizQuickAnswer",
@@ -252,7 +216,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev/vscode-theme-dark-blood",
+					"url": "https://github.com/podverse/vscode-theme-dark-blood",
 					"color": "#f1c40f",
 					"label": "🎨 Themes",
 					"message": "VSCode",
@@ -275,7 +239,7 @@
 			"id": "projects-badges4",
 			"badges": [
 				{
-					"url": "https://github.com/ptkdev-boilerplate?q=svelte",
+					"url": "https://github.com/podverse?q=svelte",
 					"color": "#f368e0",
 					"label": "👔 Boilerplate",
 					"message": "Svelte",
@@ -284,7 +248,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev-boilerplate?q=webcomponent",
+					"url": "https://github.com/podverse?q=webcomponent",
 					"color": "#f368e0",
 					"label": "👔 Boilerplate",
 					"message": "WebComponents",
@@ -293,7 +257,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev-boilerplate?q=bot",
+					"url": "https://github.com/podverse?q=bot",
 					"color": "#f368e0",
 					"label": "👔 Boilerplate",
 					"message": "BOT",
@@ -302,7 +266,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev-boilerplate?q=node",
+					"url": "https://github.com/podverse?q=node",
 					"color": "#f368e0",
 					"label": "👔 Boilerplate",
 					"message": "Node",
@@ -320,7 +284,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev/ptkdev-stickers#-installation",
+					"url": "https://github.com/podverse/lnurl-widget-stickers#-installation",
 					"color": "#2ecc71",
 					"label": "📱 App",
 					"message": "Stickers",

@@ -65,6 +65,12 @@
 					"style": "flat",
 					"logo": "javascript",
 					"platform": "shields"
+				},
+				{
+					"url": "https://discord.ptkdev.io",
+					"server_id": "383373985666301975",
+					"title": "Discord Server",
+					"platform": "discord"
 				}
 			]
 		},

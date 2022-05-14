@@ -1,0 +1,37 @@
+{
+	"compilerOptions": {
+		"target": "es2017",
+		"sourceMap": true,
+		"outDir": "./dist/",
+		"lib": ["es2017", "es7", "es6", "DOM"],
+		"baseUrl": ".",
+		"resolveJsonModule": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"declaration": false,
+		"skipLibCheck": true,
+		"allowJs": true,
+		"strict": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"forceConsistentCasingInFileNames": true,
+		"importsNotUsedAsValues": "error",
+		"preserveValueImports": true,
+		"isolatedModules": true,
+		"types": ["svelte", "jest", "nunjucks", "node"],
+		"paths": {
+			"@translations/*": ["./app/translations/*"],
+			"@configs/*": ["./app/configs/*"],
+			"@app/*": ["./app/*"]
+		},
+		"typeRoots": ["app/**/types", "node_modules/@types"],
+		"plugins": [
+			{ "transform": "typescript-transform-paths" },
+			{ "transform": "typescript-transform-paths", "afterDeclarations": true }
+		]
+	},
+	"include": ["app/**/*"],
+	"exclude": ["node_modules/*", "dist/*", "scripts/*", "examples/*"]
+}

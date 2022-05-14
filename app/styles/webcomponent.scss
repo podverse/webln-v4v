@@ -9,68 +9,52 @@
  */
 
 #webcomponent {
-	font-family: "Roboto", "Trebuchet MS";
-	text-align: center;
-	color: #999;
-	text-transform: uppercase;
-	font-size: 36px;
-	font-weight: bold;
-	position: relative;
-	width: 100%;
-	bottom: 45%;
-	display: block;
-}
+	font-family: Arial, Helvetica, sans-serif;
 
-#flip {
-	height: 50px;
-	overflow: hidden;
-}
+	p {
+		margin: 16px 0;
+	}
 
-#flip > div > div {
-	color: #fff;
-	padding: 4px 12px;
-	height: 45px;
-	margin-bottom: 45px;
-	display: inline-block;
-}
+	.checkbox-wrapper {
+		margin-bottom: 16px;
+	}
 
-#flip div:first-child {
-	animation: show 5s linear infinite;
-}
+	.links-wrapper {
+		margin-top: 16px;
+	}
 
-#flip div div {
-	background: #42c58a;
-}
-#flip div:first-child div {
-	background: #4ec7f3;
-}
-#flip div:last-child div {
-	background: #dc143c;
-}
+	.input-wrapper {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 12px;
 
-@keyframes show {
-	0% {
-		margin-top: -270px;
+		label {
+			margin-bottom: 6px;
+		}
+
+		input[type="number"] {
+			max-width: 100px;
+		}
+
+		.input-denomination {
+			font-size: 14px;
+		}
+
+		textarea {
+			max-width: 400px;
+		}
 	}
-	5% {
-		margin-top: -180px;
-	}
-	33% {
-		margin-top: -180px;
-	}
-	38% {
-		margin-top: -90px;
-	}
-	66% {
-		margin-top: -90px;
-	}
-	71% {
-		margin-top: 0px;
-	}
-	99.99% {
-		margin-top: 0px;
-	}
-	100% {
-		margin-top: -270px;
+
+	.buttons-wrapper {
+		margin-top: 16px;
+
+		button {
+			font-size: 14px;
+			margin-left: 16px;
+		}
+
+		button:first-child {
+			margin-left: 0;
+		}
 	}
 }

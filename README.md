@@ -8,6 +8,10 @@
 
 A library for rendering a basic, draggable UI widget for sending Bitcoin Lightning payments with an LNURL compatible browser extension.
 
+## DISCLAIMER 🚨🚨🚨
+
+This is an experimental library. The software is provided AS-IS, we make no guarantees of its reliability, we are not responsible if your funds go missing or are sent to the wrong address, and you and your users assume all risks associated with using it.
+
 ## Supported Browser Extensions
 
 This widget will only render on a web page if it detects that the user has an [LNURL](https://github.com/fiatjaf/lnurl-rfc) compatible browser extension installed.

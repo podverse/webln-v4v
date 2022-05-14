@@ -17,16 +17,23 @@
  */
 export interface ModuleInterface {
 	/**
-	 * Input text
+	 * Render LNURL widget
 	 * =====================
-	 * Set text
 	 *
 	 * @interface [ModuleInterface](https://github.com/podverse/lnurl-widget/blob/main/app/webcomponent/types/module.interfaces.ts)
 	 *
-	 * @param {string} text - input text
+	 * @param {string} app_name - the name of the app that is using the window.lnurl object
+	 * @param {string} message - text to send along with the boost. Also known as a "Boostagram".
+	 * @param {string} name - ???
+	 * @param {string} sender_name - ???
+	 * @param {number} value_msat_total - total number of sats to send
 	 *
 	 */
-	text: string;
+	app_name: string;
+	message?: string;
+	name: string;
+	sender_name: string;
+	value_msat_total: number;
 }
 
 /**
@@ -36,13 +43,10 @@ export interface ModuleInterface {
  */
 export interface ModuleResponseInterface {
 	/**
-	 * Output text
-	 * =====================
-	 * Get text
 	 *
 	 * @interface [ModuleResponseInterface](https://github.com/podverse/lnurl-widget/blob/main/app/webcomponent/types/module.interfaces.ts)
 	 *
-	 * @return {fn} string - run app() for output text
+	 * @return {fn}
 	 *
 	 */
 	app(): string;

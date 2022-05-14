@@ -13,6 +13,8 @@
 	// import webcomponent from "@app/functions/webcomponent";
 	// import { translate } from "@app/translations/translate";
 
+	export let amount_max: string;
+	export let amount_min: string;
 	export let app_name: string;
 	export let app_recipient_ln_address: string;
 	export let app_recipient_label: string;
@@ -26,6 +28,8 @@
 	export let send_button_label: string;
 	export let sender_name: string;
 
+	let amountMin = amount_min || 0;
+	let amountMax = amount_max || 500000;
 	let appName = app_name || "Unknown App";
 	let appRecipientLNAdress = app_recipient_ln_address || "";
 	let appRecipientLabel = app_recipient_label || "App";
@@ -98,14 +102,26 @@
 				<div class="input-wrapper">
 					<label for="content-creator-amount">{recipientLabel}</label>
 					<span>
-						<input type="number" id="content-creator-amount" min="0" max="500000" value={recipientValue} />
+						<input
+							type="number"
+							id="content-creator-amount"
+							min={amountMin}
+							max={amountMax}
+							value={recipientValue}
+						/>
 						<span class="input-denomination"> satoshis</span>
 					</span>
 				</div>
 				<div class="input-wrapper">
 					<label for="app-amount">{appRecipientLabel}</label>
 					<span>
-						<input type="number" id="app-amount" min="0" max="500000" value={appRecipientValue} />
+						<input
+							type="number"
+							id="app-amount"
+							min={amountMin}
+							max={amountMax}
+							value={appRecipientValue}
+						/>
 						<span class="input-denomination"> satoshis</span>
 					</span>
 				</div>

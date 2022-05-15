@@ -86,6 +86,7 @@
 	let lnpayInitialized = false;
 	let lnpayTermsAccepted = false;
 	let lnpayTermsRejected = false;
+	let showMoreInfo = false;
 	let termsAcceptCheckboxValue = false;
 
 	let boostPromises: any[] = [];
@@ -278,6 +279,10 @@
 		}
 	};
 
+	const toggleShowMoreInfo = () => {
+		showMoreInfo = !showMoreInfo;
+	};
+
 	/* These will regenerate the boost promises whenever an amount input value changes */
 	const handleRecipientAmountOnChange = (val: number) => {
 		const valueTag: ValueTag = JSON.parse(v4v_tag);
@@ -367,6 +372,43 @@
 				</div>
 				<div class="buttons-wrapper">
 					<button type="submit">{sendButtonLabel}</button>
+				</div>
+				<div class="more-info-wrapper">
+					<button class="show-more" on:click={toggleShowMoreInfo}>
+						{#if !showMoreInfo}
+							<span>▸</span>
+						{/if}
+						{#if showMoreInfo}
+							<span>▾</span>
+						{/if}
+						Show More Info
+					</button>
+					{#if showMoreInfo}
+						<table class="splits-table">
+							<tr>
+								<th>Name / Address</th>
+								<th>Split</th>
+								<th>Total Sats</th>
+							</tr>
+							{#each normalizedRecipients as recipient}
+								<tr>
+									<td>{recipient.name}<br /><span class="address">{recipient.address}</span></td>
+									<td class="center">{recipient.split}</td>
+									<td class="center">{recipient.amount}{recipient.amount < 10 ? "*" : ""}</td>
+								</tr>
+							{/each}
+							{#if appRecipientLNAddress && appRecipientValue > 0}
+								<tr>
+									<td>{appName}<br /><span class="address">{appRecipientLNAddress}</span></td>
+									<td class="center" />
+									<td class="center">{appRecipientValue}{appRecipientValue < 10 ? "*" : ""}</td>
+								</tr>
+							{/if}
+						</table>
+						<div class="helper-text">
+							* If a total is less than 10 sats, the transaction will not be sent.
+						</div>
+					{/if}
 				</div>
 			</form>
 		{/if}

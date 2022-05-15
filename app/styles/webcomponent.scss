@@ -10,7 +10,7 @@
 
 #webcomponent {
 	font-family: Arial, Helvetica, sans-serif;
-  max-width: 400px;
+	max-width: 400px;
 
 	p {
 		margin: 16px 0;
@@ -55,53 +55,53 @@
 		}
 	}
 
-  .more-info-wrapper {
-    margin-top: 16px;
+	.more-info-wrapper {
+		margin-top: 16px;
 
-    .show-more {
-      all: unset;
-      cursor: pointer;
-    }
+		.show-more {
+			all: unset;
+			cursor: pointer;
+		}
 
-    .splits-table {
-      margin-top: 16px;
-      border-spacing: 0px;
-      border-collapse: separate;
-      border: 1px solid black;
+		.splits-table {
+			margin-top: 16px;
+			border-spacing: 0px;
+			border-collapse: separate;
+			border: 1px solid black;
 
-      th {
-        border-right: 1px solid black;
-        padding: 4px 8px;
+			th {
+				border-right: 1px solid black;
+				padding: 4px 8px;
 
-        &:last-child {
-          border-right: 0;
-        }
-      }
+				&:last-child {
+					border-right: 0;
+				}
+			}
 
-      td {
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-        padding: 4px 8px;
-        overflow-wrap: break-word;
-        word-break: break-all;
+			td {
+				border-right: 1px solid black;
+				border-top: 1px solid black;
+				padding: 4px 8px;
+				overflow-wrap: break-word;
+				word-break: break-all;
 
-        .address {
-          font-size: 14px;
-        }
+				.address {
+					font-size: 14px;
+				}
 
-        &.center {
-          text-align: center;
-        }
+				&.center {
+					text-align: center;
+				}
 
-        &:last-child {
-          border-right: 0;
-        }
-      }
-    }
+				&:last-child {
+					border-right: 0;
+				}
+			}
+		}
 
-    .helper-text {
-      font-size: 14px;
-      margin: 8px 4px;
-    }
-  }
+		.helper-text {
+			font-size: 14px;
+			margin: 8px 4px;
+		}
+	}
 }

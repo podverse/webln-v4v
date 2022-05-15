@@ -48,10 +48,14 @@
 	export let app_recipient_ln_address: string;
 	export let app_recipient_label: string;
 	export let app_recipient_value_default: string;
+	export let content_type: string;
 	export let header_text: string;
 	export let message_label: string;
 	export let message_placeholder: string;
 	export let name: string;
+	export let podcast_episode_title: string;
+	export let podcast_podcast_index_id: string;
+	export let podcast_title: string;
 	export let recipient_label: string;
 	export let recipient_value_default: string;
 	export let send_button_label: string;
@@ -63,14 +67,17 @@
 	let appName = app_name || "Unknown App";
 	let appRecipientLNAddress = app_recipient_ln_address || "";
 	let appRecipientLabel = app_recipient_label || "App";
-	let appRecipientValue = app_recipient_value_default || 0;
+	let appRecipientValue = parseInt(app_recipient_value_default, 10) || 0;
+	let contentType = content_type || "";
 	let headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
 	let messageLabel = message_label || "Boostagram";
 	let messagePlaceholder = message_placeholder || "(optional message)";
 	let message = "";
-	let name2 = name || "Anonymous"; // not sure what "name" is for in Alby
-	let recipientLabel = recipient_label || "Content Creator";
-	let recipientValue = recipient_value_default || 0;
+	let name2 = name || "Anonymous"; // not sure what "name" is for in Alby, so calling it name2
+	let podcastEpisodeTitle = podcast_episode_title || "Untitled Episode";
+	let podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
+	let podcastTitle = podcast_title || "Untitled Podcast";
+	let recipientValue = parseInt(recipient_value_default, 10) || 0;
 	let sendButtonLabel = send_button_label || "Send Boost!";
 	let senderName = sender_name || "Anonymous";
 
@@ -81,11 +88,20 @@
 	let lnpayTermsRejected = false;
 	let termsAcceptCheckboxValue = false;
 
-	let boostPromises = [];
-	let normalizedRecipients = [];
+	let boostPromises: any[] = [];
+	let normalizedRecipients: ValueRecipientNormalized[] = [];
 
-	$: handleAppRecipientAmountOnChange(appRecipientValue);
-	$: handleRecipientAmountOnChange(recipientValue);
+	const getRecipientLabel = () => {
+		let recipientLabel = "Content Creator";
+		if (recipient_label) {
+			recipientLabel = recipient_label;
+		} else if (contentType === "podcast") {
+			recipientLabel = "Podcaster";
+		}
+		return recipientLabel;
+	};
+
+	let recipientLabel = getRecipientLabel();
 
 	const initialize = () => {
 		// check if the user has webln and keysend (currently Alby)
@@ -124,11 +140,6 @@
 		console.log("send boost", message);
 	};
 
-	// const validateBoost = () => {
-	// 	// if () {
-	// 	// }
-	// };
-
 	const calculateNormalizedSplits = (recipients: ValueRecipient[]) => {
 		let normalizedValueRecipients: ValueRecipientNormalized[] = [];
 
@@ -152,7 +163,7 @@
 	const isValidNormalizedValueRecipient = (normalizedValueRecipient: ValueRecipientNormalized) =>
 		!!(
 			normalizedValueRecipient?.address &&
-			normalizedValueRecipient?.amount > 0 &&
+			normalizedValueRecipient?.amount >= 0 && // TODO: this shouldn't allow 0
 			normalizedValueRecipient?.normalizedSplit > 0 &&
 			normalizedValueRecipient?.split > 0 &&
 			normalizedValueRecipient?.type
@@ -186,59 +197,76 @@
 		return finalNormalizedValueRecipients;
 	};
 
-	const prepareBoostPromises = (v4v: any, newRecipientValue: number, newAppRecipientValue: number) => {
+	const generateBoost = (valueSATTotal: number) => {
+		let boost: any = {
+			action: "boost",
+			value_msat_total: valueSATTotal * 1000,
+			app_name: appName,
+			sender_name: senderName,
+			name: name2,
+			message,
+		};
+
+		// Enrich with SatoshiStreamStats values
+		if (contentType === "podcast") {
+			boost = {
+				...boost,
+				podcast: podcastTitle,
+				episode: podcastEpisodeTitle,
+			};
+		}
+
+		return boost;
+	};
+
+	const generateKeysendBody = (address: string, amount: number, boost: any) => {
+		if (address && amount >= 10) return;
+
+		let keysend: any = {
+			destination: address,
+			amount,
+			customRecords: {
+				"7629169": JSON.stringify(boost),
+			},
+		};
+
+		if (contentType === "podcast") {
+			if (podcastPodcastIndexId) {
+				keysend.customRecords["7629175"] = podcastPodcastIndexId;
+			}
+		}
+
+		return keysend;
+	};
+
+	const prepareBoostPromises = (valueTag: ValueTag) => {
 		try {
 			boostPromises = [];
-			recipientValue = newRecipientValue;
-			appRecipientValue = newAppRecipientValue;
-			const { recipients } = v4v;
+			const { recipients } = valueTag;
 			const roundDownValues = true;
 			normalizedRecipients = normalizeValueRecipients(recipients, recipientValue, roundDownValues);
 
-			if (v4v.type === "lightning" && v4v.method === "keysend" && v4v.recipients && v4v.recipients.length > 0) {
+			if (
+				valueTag.type === "lightning" &&
+				valueTag.method === "keysend" &&
+				valueTag.recipients &&
+				valueTag.recipients.length > 0
+			) {
 				for (const recipient of normalizedRecipients) {
-					const boost = {
-						action: "boost",
-						value_msat_total: recipient.amount * 1000,
-						app_name,
-						sender_name,
-						name: "satoshi",
-						message,
-					};
-
 					const { address, amount } = recipient;
-					if (address && amount >= 10) {
-						boostPromises.push(
-							webln.keysend({
-								destination: address,
-								amount,
-								customRecords: {
-									"7629169": JSON.stringify(boost),
-								},
-							}),
-						);
+					const boost = generateBoost(amount);
+					const keysendBody = generateKeysendBody(address, amount, boost);
+					if (keysendBody) {
+						// boostPromises.push(webln.keysend(keysendBody));
 					}
 				}
 
 				if (appRecipientLNAddress && appRecipientValue >= 10) {
-					const boost = {
-						action: "boost",
-						value_msat_total: appRecipientValue,
-						app_name,
-						sender_name,
-						name,
-						message,
-					};
-
-					boostPromises.push(
-						webln.keysend({
-							destination: appRecipientLNAddress,
-							amount: appRecipientValue,
-							customRecords: {
-								"7629169": JSON.stringify(boost),
-							},
-						}),
-					);
+					const boost = generateBoost(appRecipientValue);
+					const keysendBody = generateKeysendBody(appRecipientLNAddress, appRecipientValue, boost);
+					if (keysendBody) {
+						// boostPromises.push(webln.keysend(keysendBody));
+					}
 				}
 			} else {
 				errorMessage = "Invalid v4v data.";
@@ -246,25 +274,28 @@
 			}
 		} catch (error: any) {
 			errorMessage = error.message;
-			return [];
+			boostPromises = [];
 		}
 	};
 
+	/* These will regenerate the boost promises whenever an amount input value changes */
 	const handleRecipientAmountOnChange = (val: number) => {
-		const v4vObject = JSON.parse(v4v_tag);
-		boostPromises = prepareBoostPromises(v4vObject, recipientValue, appRecipientValue);
+		const valueTag: ValueTag = JSON.parse(v4v_tag);
+		recipientValue = val;
+		boostPromises = prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
 	};
 
 	const handleAppRecipientAmountOnChange = (val: number) => {
-		const v4vObject = JSON.parse(v4v_tag);
-		boostPromises = prepareBoostPromises(v4vObject, recipientValue, appRecipientValue);
+		const valueTag: ValueTag = JSON.parse(v4v_tag);
+		appRecipientValue = val;
+		boostPromises = prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
 	};
 
 	lnpayInitialized = initialize();
 
 	if (lnpayInitialized && v4v_tag) {
-		const v4vObject = JSON.parse(v4v_tag);
-		boostPromises = prepareBoostPromises(v4vObject, recipientValue, appRecipientValue);
+		const valueTag: ValueTag = JSON.parse(v4v_tag);
+		prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
 	}
 </script>
 
@@ -309,9 +340,9 @@
 							id="content-creator-amount"
 							max={amountMax}
 							min={amountMin}
-							on:input={handleRecipientAmountOnChange}
+							on:input={(event) => handleRecipientAmountOnChange(event.target.value)}
 							type="number"
-							bind:value={recipientValue}
+							value={recipientValue}
 						/>
 						<span class="input-denomination"> satoshis</span>
 					</span>
@@ -323,9 +354,9 @@
 							id="app-amount"
 							max={amountMax}
 							min={amountMin}
-							on:input={handleAppRecipientAmountOnChange}
+							on:input={(event) => handleAppRecipientAmountOnChange(event.target.value)}
 							type="number"
-							bind:value={appRecipientValue}
+							value={appRecipientValue}
 						/>
 						<span class="input-denomination"> satoshis</span>
 					</span>

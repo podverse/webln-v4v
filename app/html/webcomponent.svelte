@@ -49,6 +49,7 @@
 	export let app_recipient_label: string;
 	export let app_recipient_value_default: string;
 	export let content_type: string;
+	export let has_accepted_terms: string;
 	export let header_text: string;
 	export let message_label: string;
 	export let message_placeholder: string;
@@ -59,6 +60,7 @@
 	export let recipient_label: string;
 	export let recipient_value_default: string;
 	export let send_button_label: string;
+	export let send_button_sent_label: string;
 	export let sender_name: string;
 	export let v4v_tag: string;
 
@@ -69,9 +71,10 @@
 	let appRecipientLabel = app_recipient_label || "App";
 	let appRecipientValue = parseInt(app_recipient_value_default, 10) || 0;
 	let contentType = content_type || "";
+	let hasAcceptedTerms = has_accepted_terms === "true";
 	let headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
 	let messageLabel = message_label || "Boostagram";
-	let messagePlaceholder = message_placeholder || "(optional message)";
+	let messagePlaceholder = message_placeholder || "(optional public message)";
 	let message = "";
 	let name2 = name || "Anonymous"; // not sure what "name" is for in Alby, so calling it name2
 	let podcastEpisodeTitle = podcast_episode_title || "Untitled Episode";
@@ -79,12 +82,16 @@
 	let podcastTitle = podcast_title || "Untitled Podcast";
 	let recipientValue = parseInt(recipient_value_default, 10) || 0;
 	let sendButtonLabel = send_button_label || "Send Boost!";
+	let sendButtonSentLabel = send_button_sent_label || "Boost Sent!";
 	let senderName = sender_name || "Anonymous";
 
+	let boostIsSending = false;
+	let boostWasSent = false;
 	let errorMessage = "";
+	let isInitialLoad = true;
 	let lnpayEnabled = false;
 	let lnpayInitialized = false;
-	let lnpayTermsAccepted = false;
+	let lnpayTermsAccepted = hasAcceptedTerms;
 	let lnpayTermsRejected = false;
 	let showMoreInfo = false;
 	let termsAcceptCheckboxValue = false;
@@ -105,11 +112,9 @@
 	let recipientLabel = getRecipientLabel();
 
 	const initialize = () => {
+		isInitialLoad = false;
 		// check if the user has webln and keysend (currently Alby)
-		// return !(typeof window.webln === "undefined" || !window.webln.keysend);
-
-		// TODO: add initialize check
-		return true;
+		return !(typeof window.webln === "undefined" || !window.webln.keysend);
 	};
 
 	const enableWebLN = async () => {
@@ -129,16 +134,12 @@
 	const acceptTermsAndContinue = async () => {
 		await enableWebLN();
 		lnpayTermsAccepted = true;
+
+		dispatchEvent(new CustomEvent("LNURL-Widget-Terms-Accepted", { bubbles: true }));
 	};
 
 	const rejectTerms = () => {
 		lnpayTermsRejected = true;
-	};
-
-	const sendBoost = () => {
-		console.log("do validation", appRecipientValue);
-		console.log("get values", recipientValue);
-		console.log("send boost", message);
 	};
 
 	const calculateNormalizedSplits = (recipients: ValueRecipient[]) => {
@@ -283,6 +284,19 @@
 		showMoreInfo = !showMoreInfo;
 	};
 
+	const sendBoost = () => {
+		boostIsSending = true;
+
+		setTimeout(() => {
+			boostIsSending = false;
+			boostWasSent = true;
+
+			setTimeout(() => {
+				boostWasSent = false;
+			}, 3000);
+		}, 1500);
+	};
+
 	/* These will regenerate the boost promises whenever an amount input value changes */
 	const handleRecipientAmountOnChange = (val: number) => {
 		const valueTag: ValueTag = JSON.parse(v4v_tag);
@@ -296,16 +310,29 @@
 		boostPromises = prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
 	};
 
-	lnpayInitialized = initialize();
+	/*
+        TODO: Instead of a setTimeout, we should listen for a "lnurl is loaded" event.
+        I don't think one exists at the moment.
+    */
+	setTimeout(() => {
+		lnpayInitialized = initialize();
 
-	if (lnpayInitialized && v4v_tag) {
-		const valueTag: ValueTag = JSON.parse(v4v_tag);
-		prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
-	}
+		if (lnpayInitialized && v4v_tag) {
+			try {
+				const valueTag: ValueTag = JSON.parse(v4v_tag);
+				prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
+			} catch (error) {
+				errorMessage = "Invalid v4v data.";
+			}
+		}
+	}, 1500);
 </script>
 
-{#if lnpayInitialized && !lnpayTermsRejected}
-	<div id="webcomponent" part="webcomponent">
+<div id="lnurl-widget" part="lnurl-widget">
+	{#if isInitialLoad}
+		<div class="loader" />
+	{/if}
+	{#if !isInitialLoad && lnpayInitialized && !lnpayTermsRejected}
 		{#if errorMessage}
 			{`ERROR: ${errorMessage}`}
 		{/if}
@@ -328,8 +355,13 @@
 				<label for="accept-checkbox">I understand the risks and accept.</label>
 			</div>
 			<div class="buttons-wrapper">
-				<button on:click={rejectTerms}>Cancel</button>
-				<button disabled={!termsAcceptCheckboxValue} on:click={acceptTermsAndContinue}>I Accept</button>
+				<button class="secondary" on:click={rejectTerms} type="button">Cancel</button>
+				<button
+					class="primary"
+					disabled={!termsAcceptCheckboxValue}
+					on:click={acceptTermsAndContinue}
+					type="button">I Accept</button
+				>
 			</div>
 			<div class="links-wrapper">
 				<a href="https://github.com/podverse/lnurl-widget" target="_blank">Source Code</a>
@@ -352,29 +384,38 @@
 						<span class="input-denomination"> satoshis</span>
 					</span>
 				</div>
-				<div class="input-wrapper">
-					<label for="app-amount">{appRecipientLabel}</label>
-					<span>
-						<input
-							id="app-amount"
-							max={amountMax}
-							min={amountMin}
-							on:input={(event) => handleAppRecipientAmountOnChange(event.target.value)}
-							type="number"
-							value={appRecipientValue}
-						/>
-						<span class="input-denomination"> satoshis</span>
-					</span>
-				</div>
+				{#if appRecipientLNAddress}
+					<div class="input-wrapper">
+						<label for="app-amount">{appRecipientLabel}</label>
+						<span>
+							<input
+								id="app-amount"
+								max={amountMax}
+								min={amountMin}
+								on:input={(event) => handleAppRecipientAmountOnChange(event.target.value)}
+								type="number"
+								value={appRecipientValue}
+							/>
+							<span class="input-denomination"> satoshis</span>
+						</span>
+					</div>
+				{/if}
 				<div class="input-wrapper">
 					<label for="boostagram">{messageLabel}</label>
-					<textarea id="boostagram" placeholder={messagePlaceholder} bind:value={message} />
+					<textarea id="boostagram" placeholder={messagePlaceholder} rows="4" bind:value={message} />
 				</div>
 				<div class="buttons-wrapper">
-					<button type="submit">{sendButtonLabel}</button>
+					<button class="primary" disabled={boostIsSending} type="submit">
+						<span class={boostIsSending ? "hide" : ""}
+							>{boostWasSent ? sendButtonSentLabel : sendButtonLabel}</span
+						>
+						{#if boostIsSending}
+							<div class="loader" />
+						{/if}
+					</button>
 				</div>
 				<div class="more-info-wrapper">
-					<button class="show-more" on:click={toggleShowMoreInfo}>
+					<button class="show-more" on:click={toggleShowMoreInfo} type="button">
 						{#if !showMoreInfo}
 							<span>▸</span>
 						{/if}
@@ -392,14 +433,20 @@
 							</tr>
 							{#each normalizedRecipients as recipient}
 								<tr>
-									<td>{recipient.name}<br /><span class="address">{recipient.address}</span></td>
+									<td
+										>{recipient.name}
+										<div class="address">{recipient.address}</div></td
+									>
 									<td class="center">{recipient.split}</td>
 									<td class="center">{recipient.amount}{recipient.amount < 10 ? "*" : ""}</td>
 								</tr>
 							{/each}
 							{#if appRecipientLNAddress && appRecipientValue > 0}
 								<tr>
-									<td>{appName}<br /><span class="address">{appRecipientLNAddress}</span></td>
+									<td
+										>{appName}
+										<div class="address">{appRecipientLNAddress}</div></td
+									>
 									<td class="center" />
 									<td class="center">{appRecipientValue}{appRecipientValue < 10 ? "*" : ""}</td>
 								</tr>
@@ -412,8 +459,8 @@
 				</div>
 			</form>
 		{/if}
-	</div>
-{/if}
+	{/if}
+</div>
 
 <style lang="scss">
 	@import "../styles/webcomponent.scss";

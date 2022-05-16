@@ -81,7 +81,7 @@
 	let podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
 	let podcastTitle = podcast_title || "Untitled Podcast";
 	let recipientValue = parseInt(recipient_value_default, 10) || 0;
-	let sendButtonLabel = send_button_label || "Send Boost!";
+	let sendButtonLabel = send_button_label || "Send Boost";
 	let sendButtonSentLabel = send_button_sent_label || "Boost Sent!";
 	let senderName = sender_name || "Anonymous";
 
@@ -89,7 +89,6 @@
 	let boostWasSent = false;
 	let errorMessage = "";
 	let isInitialLoad = true;
-	let lnpayEnabled = false;
 	let lnpayInitialized = false;
 	let lnpayTermsAccepted = hasAcceptedTerms;
 	let lnpayTermsRejected = false;
@@ -121,9 +120,7 @@
 		if (!errorMessage) {
 			try {
 				// enable webln / request website permission
-				// TODO: disabling this for dev purposes for now
-				// await webln.enable();
-				lnpayEnabled = true;
+				await webln.enable();
 			} catch (error) {
 				errorMessage = "User denied permission or cancelled.";
 				throw new Error(errorMessage);
@@ -222,7 +219,7 @@
 	};
 
 	const generateKeysendBody = (address: string, amount: number, boost: any) => {
-		if (address && amount >= 10) return;
+		if (!address || amount < 10) return;
 
 		let keysend: any = {
 			destination: address,
@@ -259,7 +256,7 @@
 					const boost = generateBoost(amount);
 					const keysendBody = generateKeysendBody(address, amount, boost);
 					if (keysendBody) {
-						// boostPromises.push(webln.keysend(keysendBody));
+						boostPromises.push(() => webln.keysend(keysendBody));
 					}
 				}
 
@@ -267,7 +264,7 @@
 					const boost = generateBoost(appRecipientValue);
 					const keysendBody = generateKeysendBody(appRecipientLNAddress, appRecipientValue, boost);
 					if (keysendBody) {
-						// boostPromises.push(webln.keysend(keysendBody));
+						boostPromises.push(() => webln.keysend(keysendBody));
 					}
 				}
 			} else {
@@ -284,38 +281,44 @@
 		showMoreInfo = !showMoreInfo;
 	};
 
-	const sendBoost = () => {
+	const sendBoost = async () => {
 		boostIsSending = true;
 
-		setTimeout(() => {
-			boostIsSending = false;
-			boostWasSent = true;
+		for (const boostPromise of boostPromises) {
+			await boostPromise();
+		}
 
-			setTimeout(() => {
-				boostWasSent = false;
-			}, 3000);
-		}, 1500);
+		boostIsSending = false;
+		boostWasSent = true;
+
+		setTimeout(() => {
+			boostWasSent = false;
+		}, 3000);
 	};
 
 	/* These will regenerate the boost promises whenever an amount input value changes */
 	const handleRecipientAmountOnChange = (val: number) => {
 		const valueTag: ValueTag = JSON.parse(v4v_tag);
 		recipientValue = val;
-		boostPromises = prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
+		prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
 	};
 
 	const handleAppRecipientAmountOnChange = (val: number) => {
 		const valueTag: ValueTag = JSON.parse(v4v_tag);
 		appRecipientValue = val;
-		boostPromises = prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
+		prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
 	};
 
 	/*
         TODO: Instead of a setTimeout, we should listen for a "lnurl is loaded" event.
         I don't think one exists at the moment.
     */
-	setTimeout(() => {
+	setTimeout(async () => {
 		lnpayInitialized = initialize();
+
+		if (lnpayTermsAccepted) {
+			await enableWebLN();
+		}
 
 		if (lnpayInitialized && v4v_tag) {
 			try {
@@ -406,9 +409,9 @@
 				</div>
 				<div class="buttons-wrapper">
 					<button class="primary" disabled={boostIsSending} type="submit">
-						<span class={boostIsSending ? "hide" : ""}
-							>{boostWasSent ? sendButtonSentLabel : sendButtonLabel}</span
-						>
+						{#if !boostIsSending}
+							<span>{boostWasSent ? sendButtonSentLabel : sendButtonLabel}</span>
+						{/if}
 						{#if boostIsSending}
 							<div class="loader" />
 						{/if}

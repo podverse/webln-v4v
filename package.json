@@ -114,5 +114,8 @@
 		"webcomponents-boilerplate",
 		"boilerplate"
 	],
-	"contributors": []
+	"contributors": [],
+	"dependencies": {
+		"uuid": "^8.3.2"
+	}
 }

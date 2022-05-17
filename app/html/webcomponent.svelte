@@ -12,6 +12,7 @@
 	 */
 	// import webcomponent from "@app/functions/webcomponent";
 	// import { translate } from "@app/translations/translate";
+	import { v4 as uuidv4 } from "uuid";
 
 	type ValueTag = {
 		method: string;
@@ -45,6 +46,8 @@
 	export let amount_max: string;
 	export let amount_min: string;
 	export let app_name: string;
+	export let app_recipient_custom_key: string;
+	export let app_recipient_custom_value: string;
 	export let app_recipient_ln_address: string;
 	export let app_recipient_label: string;
 	export let app_recipient_value_default: string;
@@ -53,7 +56,6 @@
 	export let header_text: string;
 	export let message_label: string;
 	export let message_placeholder: string;
-	export let name: string;
 	export let podcast_episode_title: string;
 	export let podcast_podcast_index_id: string;
 	export let podcast_title: string;
@@ -67,6 +69,8 @@
 	let amountMin = amount_min || 0;
 	let amountMax = amount_max || 500000;
 	let appName = app_name || "Unknown App";
+	let appRecipientCustomKey = app_recipient_custom_key || "";
+	let appRecipientCustomValue = app_recipient_custom_value || "";
 	let appRecipientLNAddress = app_recipient_ln_address || "";
 	let appRecipientLabel = app_recipient_label || "App";
 	let appRecipientValue = parseInt(app_recipient_value_default, 10) || 0;
@@ -76,7 +80,6 @@
 	let messageLabel = message_label || "Boostagram";
 	let messagePlaceholder = message_placeholder || "(optional public message)";
 	let message = "";
-	let name2 = name || "Anonymous"; // not sure what "name" is for in Alby, so calling it name2
 	let podcastEpisodeTitle = podcast_episode_title || "Untitled Episode";
 	let podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
 	let podcastTitle = podcast_title || "Untitled Podcast";
@@ -196,13 +199,13 @@
 		return finalNormalizedValueRecipients;
 	};
 
-	const generateBoost = (valueSATTotal: number) => {
+	const generateBoost = (valueSATTotal: number, name) => {
 		let boost: any = {
 			action: "boost",
 			value_msat_total: valueSATTotal * 1000,
 			app_name: appName,
 			sender_name: senderName,
-			name: name2,
+			name,
 			message,
 		};
 
@@ -218,7 +221,13 @@
 		return boost;
 	};
 
-	const generateKeysendBody = (address: string, amount: number, boost: any) => {
+	const generateKeysendBody = (
+		address: string,
+		amount: number,
+		boost: any,
+		customKey: string,
+		customValue: string,
+	) => {
 		if (!address || amount < 10) return;
 
 		let keysend: any = {
@@ -226,6 +235,14 @@
 			amount,
 			customRecords: {
 				"7629169": JSON.stringify(boost),
+				// A random uuid MUST be assigned to 5482373484.
+				"5482373484": uuidv4(),
+				/* 
+                    Some Lightning wallets MUST have a customKey and customValue,
+                    or the funds will be lost (they'll end up with the Lightning node operator)
+                    instead of the intended wallet recipient.
+                */
+				...(customKey && customValue ? { [customKey]: customValue } : {}),
 			},
 		};
 
@@ -252,17 +269,25 @@
 				valueTag.recipients.length > 0
 			) {
 				for (const recipient of normalizedRecipients) {
-					const { address, amount } = recipient;
-					const boost = generateBoost(amount);
-					const keysendBody = generateKeysendBody(address, amount, boost);
+					const { address, amount, customKey, customValue, name } = recipient;
+					const boost = generateBoost(amount, name);
+					const keysendBody = generateKeysendBody(address, amount, boost, customKey, customValue);
+
 					if (keysendBody) {
 						boostPromises.push(() => webln.keysend(keysendBody));
 					}
 				}
 
 				if (appRecipientLNAddress && appRecipientValue >= 10) {
-					const boost = generateBoost(appRecipientValue);
-					const keysendBody = generateKeysendBody(appRecipientLNAddress, appRecipientValue, boost);
+					const boost = generateBoost(appRecipientValue, app_name);
+					const keysendBody = generateKeysendBody(
+						appRecipientLNAddress,
+						appRecipientValue,
+						boost,
+						appRecipientCustomKey,
+						appRecipientCustomValue,
+					);
+
 					if (keysendBody) {
 						boostPromises.push(() => webln.keysend(keysendBody));
 					}
@@ -300,13 +325,19 @@
 	const handleRecipientAmountOnChange = (val: number) => {
 		const valueTag: ValueTag = JSON.parse(v4v_tag);
 		recipientValue = val;
-		prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
+		prepareBoostPromises(valueTag);
 	};
 
 	const handleAppRecipientAmountOnChange = (val: number) => {
 		const valueTag: ValueTag = JSON.parse(v4v_tag);
 		appRecipientValue = val;
-		prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
+		prepareBoostPromises(valueTag);
+	};
+
+	const handleMessageOnBlur = (val: string) => {
+		const valueTag: ValueTag = JSON.parse(v4v_tag);
+		message = val;
+		prepareBoostPromises(valueTag);
 	};
 
 	/*
@@ -405,7 +436,13 @@
 				{/if}
 				<div class="input-wrapper">
 					<label for="boostagram">{messageLabel}</label>
-					<textarea id="boostagram" placeholder={messagePlaceholder} rows="4" bind:value={message} />
+					<textarea
+						id="boostagram"
+						on:blur={(event) => handleMessageOnBlur(event.target.value)}
+						placeholder={messagePlaceholder}
+						rows="4"
+						bind:value={message}
+					/>
 				</div>
 				<div class="buttons-wrapper">
 					<button class="primary" disabled={boostIsSending} type="submit">
@@ -438,9 +475,15 @@
 								<tr>
 									<td
 										>{recipient.name}
-										<div class="address">{recipient.address}</div></td
-									>
-									<td class="center">{recipient.split}</td>
+										<div class="address">{recipient.address}</div>
+										{#if recipient.customKey}
+											<div class="custom-key">Custom Key: {recipient.customKey}</div>
+										{/if}
+										{#if recipient.customValue}
+											<div class="custom-value">Custom Value: {recipient.customValue}</div>
+										{/if}
+									</td>
+									<td class="center">{recipient.normalizedSplit}</td>
 									<td class="center">{recipient.amount}{recipient.amount < 10 ? "*" : ""}</td>
 								</tr>
 							{/each}
@@ -448,8 +491,14 @@
 								<tr>
 									<td
 										>{appName}
-										<div class="address">{appRecipientLNAddress}</div></td
-									>
+										<div class="address">{appRecipientLNAddress}</div>
+										{#if appRecipientCustomKey}
+											<div class="custom-key">Custom Key: {appRecipientCustomKey}</div>
+										{/if}
+										{#if appRecipientCustomValue}
+											<div class="custom-value">Custom Value: {appRecipientCustomValue}</div>
+										{/if}
+									</td>
 									<td class="center" />
 									<td class="center">{appRecipientValue}{appRecipientValue < 10 ? "*" : ""}</td>
 								</tr>

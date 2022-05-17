@@ -23,9 +23,9 @@
 		@include focus-colors;
 	}
 
-  .no-wrap {
-    white-space: nowrap;
-  }
+	.no-wrap {
+		white-space: nowrap;
+	}
 
 	.loader {
 		border: 6px solid var(--lnurl-loader-border-color, #ccc);
@@ -227,7 +227,7 @@
 			th {
 				border-right: 1px solid var(--lnurl-table-border-color, gray);
 				padding: 4px 8px;
-        white-space: nowrap;
+				white-space: nowrap;
 
 				&:last-child {
 					border-right: 0;

@@ -142,6 +142,7 @@
 
 	const rejectTerms = () => {
 		lnpayTermsRejected = true;
+		dispatchEvent(new CustomEvent("LNURL-Widget-Terms-Rejected", { bubbles: true }));
 	};
 
 	const calculateNormalizedSplits = (recipients: ValueRecipient[]) => {

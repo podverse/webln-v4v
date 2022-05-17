@@ -2,7 +2,7 @@
 
 <!-- all-shields/header-badges:START -->
 
-[![v1.0.0-beta.1](https://img.shields.io/badge/version-v1.0.0--beta.1-lightgray.svg?style=flat&logo=)](https://github.com/podverse/lnurl-widget/blob/main/CHANGELOG.md) [![](https://img.shields.io/npm/v/@podverse/lnurl-widget?color=CC3534&logo=npm)](https://www.npmjs.com/package/@podverse/lnurl-widget) [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat&logo=license)](https://github.com/podverse/lnurl-widget/blob/main/LICENSE.md) [![Powered By Svelte](https://img.shields.io/badge/powered%20by-svelte-FF3C02.svg?style=flat&logo=svelte)](https://svelte.dev/) [![Language: TypeScript](https://img.shields.io/badge/language-typescript-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![ECMAScript: 2019](https://img.shields.io/badge/ES-9-F7DF1E.svg?style=flat&logo=javascript)](https://github.com/tc39/ecma262) [![Discord Server](https://discordapp.com/api/guilds/383373985666301975/embed.png)](https://discord.ptkdev.io)
+[![v1.0.0-beta.1](https://img.shields.io/badge/version-v1.0.0--beta.1-lightgray.svg?style=flat&logo=)](https://github.com/podverse/lnurl-widget/blob/main/CHANGELOG.md) [![](https://img.shields.io/npm/v/lnurl-widget?color=CC3534&logo=npm)](https://www.npmjs.com/package/lnurl-widget) [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat&logo=license)](https://github.com/podverse/lnurl-widget/blob/main/LICENSE.md) [![Powered By Svelte](https://img.shields.io/badge/powered%20by-svelte-FF3C02.svg?style=flat&logo=svelte)](https://svelte.dev/) [![Language: TypeScript](https://img.shields.io/badge/language-typescript-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![ECMAScript: 2019](https://img.shields.io/badge/ES-9-F7DF1E.svg?style=flat&logo=javascript)](https://github.com/tc39/ecma262) [![Discord Server](https://discordapp.com/api/guilds/383373985666301975/embed.png)](https://discord.ptkdev.io)
 
 <!-- all-shields/header-badges:END -->
 
@@ -90,7 +90,7 @@ Thank you to [@ptkdev](https://github.com/ptkdev) for creating the [svelte-webco
 2. Require javascript in yourpage (before `</body>`):
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@podverse/lnurl-widget@latest/dist/webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lnurl-widget@latest/dist/webcomponent.js"></script>
 ```
 
 You can replace `@latest` with specific version, example `@2.0.1`.
@@ -99,7 +99,7 @@ Below is available a description of `options` values.
 
 ## 📦 Installation (NPM Module - Browserify/Webpack)
 
-1. Install npm module: `npm install @podverse/lnurl-widget --save`
+1. Install npm module: `npm install lnurl-widget --save`
 2. Add html code to your page:
 
 ```html
@@ -109,20 +109,20 @@ Below is available a description of `options` values.
 3. Require javascript in your app:
 
 ```javascript
-require("@podverse/lnurl-widget");
+require("lnurl-widget");
 ```
 
 or
 
 ```javascript
-import "@podverse/lnurl-widget";
+import "lnurl-widget";
 ```
 
 Below is available a description of `options` values.
 
 ## 📖 Installation (Wordpress)
 
-1. Download wordpress plugin from [mirror](https://cdn.jsdelivr.net/npm/@podverse/lnurl-widget@latest/dist/wordpress/lnurl-widget-wordpress-plugin.zip) and install it.
+1. Download wordpress plugin from [mirror](https://cdn.jsdelivr.net/npm/lnurl-widget@latest/dist/wordpress/lnurl-widget-wordpress-plugin.zip) and install it.
 1. Add code to your html widget, example: `Appearance` --> `Widget` --> insert `HTML Widget` and paste html code:
 
 ```html
@@ -133,11 +133,11 @@ You can insert this html code in posts, widget, html box or theme.
 
 ## 🔵 Installation (React)
 
-1. Install npm module with `npm install @podverse/lnurl-widget@latest --save`:
+1. Install npm module with `npm install lnurl-widget@latest --save`:
 2. Import module in your `src/App.js` on header:
 
 ```javascript
-import "@podverse/lnurl-widget";
+import "lnurl-widget";
 ```
 
 3. Add html code to your `App.js` template:
@@ -148,11 +148,11 @@ import "@podverse/lnurl-widget";
 
 ## 🔴 Installation (Angular)
 
-1. Install npm module with `npm install @podverse/lnurl-widget@latest --save`:
+1. Install npm module with `npm install lnurl-widget@latest --save`:
 2. Import module in your `app/app.modules.ts` on header:
 
 ```javascript
-import "@podverse/lnurl-widget";
+import "lnurl-widget";
 ```
 
 3. Add html code to your html component:
@@ -163,11 +163,11 @@ import "@podverse/lnurl-widget";
 
 ## 🟠 Installation (Svelte)
 
-1. Install npm module with `npm install @podverse/lnurl-widget@latest --save`:
+1. Install npm module with `npm install lnurl-widget@latest --save`:
 2. Import module in your `src/App.svelte` on header:
 
 ```javascript
-import "@podverse/lnurl-widget";
+import "lnurl-widget";
 ```
 
 3. Add html code to your html component:
@@ -178,12 +178,12 @@ import "@podverse/lnurl-widget";
 
 ## 🟢 Installation (Vue)
 
-1. Install npm module with `npm install @podverse/lnurl-widget@latest --save`:
+1. Install npm module with `npm install lnurl-widget@latest --save`:
 2. Import module in your `src/App.vue` and add webcomponent to ignoreElements of vue config:
 
 ```javascript
 import Vue from "vue";
-import "@podverse/lnurl-widget";
+import "lnurl-widget";
 
 Vue.config.ignoredElements = ["lnurl-widget"];
 ```

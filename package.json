@@ -1,5 +1,5 @@
 {
-	"name": "@podverse/lnurl-widget",
+	"name": "lnurl-widget",
 	"displayName": "LNURL on-page widget",
 	"description": "A library for rendering a basic, draggable UI widget for sending Bitcoin Lightning payments with an LNURL compatible browser extension",
 	"version": "1.0.0-beta.1",

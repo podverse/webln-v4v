@@ -18,12 +18,12 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://www.npmjs.com/package/@podverse/lnurl-widget",
+					"url": "https://www.npmjs.com/package/lnurl-widget",
 					"color": "#CC3534",
 					"label": "npm",
 					"logo": "npm",
 					"style": "flat",
-					"custom": "/npm/v/@podverse/lnurl-widget?color=CC3534&logo=npm",
+					"custom": "/npm/v/lnurl-widget?color=CC3534&logo=npm",
 					"platform": "shields"
 				},
 				{

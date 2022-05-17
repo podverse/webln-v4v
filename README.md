@@ -22,7 +22,7 @@ Currently supported browser extensions include:
 
 ## Attribution / Donate to Patrick
 
-Thank you to [@ptkdev](https://github.com/ptkdev) for creating the [svelte-webcomponent-boilerplate](https://github.com/ptkdev/svelte-webcomponent-boilerplate). This project was built on top of this boilerplate. Please consider [donating to Patrick](https://github.com/ptkdev) for his great work.
+Thank you to [@ptkdev](https://github.com/ptkdev) for creating the [svelte-webcomponent-boilerplate](https://github.com/ptkdev-boilerplate/svelte-webcomponent-boilerplate). This project was built on top of this boilerplate. Please consider [donating to Patrick](https://github.com/ptkdev) for his great work.
 
 ## Support Podverse
 

@@ -53,6 +53,7 @@
 	export let app_recipient_value_default: string;
 	export let content_type: string;
 	export let has_accepted_terms: string;
+	export let has_rejected_terms: string;
 	export let header_text: string;
 	export let message_label: string;
 	export let message_placeholder: string;
@@ -77,10 +78,10 @@
 	let appRecipientValue = parseInt(app_recipient_value_default, 10) || 0;
 	let contentType = content_type || "";
 	let hasAcceptedTerms = has_accepted_terms === "true";
+	let hasRejectedTerms = has_rejected_terms === "true";
 	let headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
 	let messageLabel = message_label || "Boostagram";
 	let messagePlaceholder = message_placeholder || "optional public message";
-	let message = "";
 	let podcastEpisodeTitle = podcast_episode_title || "Untitled Episode";
 	let podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
 	let podcastTitle = podcast_title || "Untitled Podcast";
@@ -96,7 +97,8 @@
 	let isInitialLoad = true;
 	let lnpayInitialized = false;
 	let lnpayTermsAccepted = hasAcceptedTerms;
-	let lnpayTermsRejected = false;
+	let lnpayTermsRejected = hasRejectedTerms;
+	let message = "";
 	let showMoreInfo = false;
 	let termsAcceptCheckboxValue = false;
 
@@ -321,6 +323,11 @@
 		showMoreInfo = !showMoreInfo;
 	};
 
+	const showTerms = () => {
+		lnpayTermsAccepted = false;
+		lnpayTermsRejected = false;
+	};
+
 	const sendBoost = async () => {
 		boostIsSending = true;
 
@@ -406,7 +413,12 @@
 </script>
 
 <div id="lnurl-widget" part="lnurl-widget">
-	{#if isInitialLoad}
+	{#if lnpayTermsRejected}
+		<div class="buttons-wrapper">
+			<button class="primary" id="show-terms" on:click={showTerms} type="button"> Show Menu </button>
+		</div>
+	{/if}
+	{#if isInitialLoad && !lnpayTermsAccepted}
 		<div class="loader" />
 	{/if}
 	{#if !isInitialLoad && lnpayInitialized && !lnpayTermsRejected}

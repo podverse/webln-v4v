@@ -154,9 +154,8 @@
 				composed: true,
 			}),
 		);
-		setTimeout(() => {
-			lnpayTermsRejected = true;
-		}, 500);
+
+		lnpayTermsRejected = true;
 	};
 
 	const calculateNormalizedSplits = (recipients: ValueRecipient[]) => {

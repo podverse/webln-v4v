@@ -418,7 +418,7 @@
 			<button class="primary" id="show-terms" on:click={showTerms} type="button"> Show Menu </button>
 		</div>
 	{/if}
-	{#if isInitialLoad && !lnpayTermsAccepted}
+	{#if isInitialLoad && !lnpayTermsAccepted && !lnpayTermsRejected}
 		<div class="loader" />
 	{/if}
 	{#if !isInitialLoad && lnpayInitialized && !lnpayTermsRejected}

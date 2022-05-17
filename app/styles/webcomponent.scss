@@ -95,6 +95,19 @@
 			}
 		}
 
+		input[type="text"] {
+			all: unset;
+			background-color: var(--lnurl-text-input-background-color, white);
+			border: 1px solid var(--lnurl-input-border, gray);
+			color: var(--lnurl-text, black);
+			max-width: 150px;
+			padding: 6px 8px;
+
+			&:focus {
+				@include focus-colors;
+			}
+		}
+
 		.input-denomination {
 			font-size: 14px;
 			margin-left: 4px;

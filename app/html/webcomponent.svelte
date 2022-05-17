@@ -64,6 +64,7 @@
 	export let send_button_label: string;
 	export let send_button_sent_label: string;
 	export let sender_name: string;
+	export let sender_name_label: string;
 	export let v4v_tag: string;
 
 	let amountMin = amount_min || 0;
@@ -78,7 +79,7 @@
 	let hasAcceptedTerms = has_accepted_terms === "true";
 	let headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
 	let messageLabel = message_label || "Boostagram";
-	let messagePlaceholder = message_placeholder || "(optional public message)";
+	let messagePlaceholder = message_placeholder || "optional public message";
 	let message = "";
 	let podcastEpisodeTitle = podcast_episode_title || "Untitled Episode";
 	let podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
@@ -86,7 +87,8 @@
 	let recipientValue = parseInt(recipient_value_default, 10) || 0;
 	let sendButtonLabel = send_button_label || "Send Boost";
 	let sendButtonSentLabel = send_button_sent_label || "Boost Sent!";
-	let senderName = sender_name || "Anonymous";
+	let senderName = sender_name || "";
+	let senderNameLabel = sender_name_label || "Your Name";
 
 	let boostIsSending = false;
 	let boostWasSent = false;
@@ -272,7 +274,6 @@
 					const { address, amount, customKey, customValue, name } = recipient;
 					const boost = generateBoost(amount, name);
 					const keysendBody = generateKeysendBody(address, amount, boost, customKey, customValue);
-
 					if (keysendBody) {
 						boostPromises.push(() => webln.keysend(keysendBody));
 					}
@@ -326,18 +327,40 @@
 		const valueTag: ValueTag = JSON.parse(v4v_tag);
 		recipientValue = val;
 		prepareBoostPromises(valueTag);
+		dispatchNewDefaultFormValues();
 	};
 
 	const handleAppRecipientAmountOnChange = (val: number) => {
 		const valueTag: ValueTag = JSON.parse(v4v_tag);
 		appRecipientValue = val;
 		prepareBoostPromises(valueTag);
+		dispatchNewDefaultFormValues();
+	};
+
+	const handleSenderNameOnChange = (val: string) => {
+		const valueTag: ValueTag = JSON.parse(v4v_tag);
+		senderName = val;
+		prepareBoostPromises(valueTag);
+		dispatchNewDefaultFormValues();
 	};
 
 	const handleMessageOnBlur = (val: string) => {
 		const valueTag: ValueTag = JSON.parse(v4v_tag);
 		message = val;
 		prepareBoostPromises(valueTag);
+	};
+
+	const dispatchNewDefaultFormValues = () => {
+		dispatchEvent(
+			new CustomEvent("LNURL-Widget-New-Default-Values", {
+				bubbles: true,
+				detail: {
+					defaultAppAmount: appRecipientValue,
+					defaultContentCreatorAmount: recipientValue,
+					defaultSenderName: senderName,
+				},
+			}),
+		);
 	};
 
 	/*
@@ -434,6 +457,18 @@
 						</span>
 					</div>
 				{/if}
+				<div class="input-wrapper">
+					<label for="sender-name">{senderNameLabel}</label>
+					<span>
+						<input
+							id="sender-name"
+							on:input={(event) => handleSenderNameOnChange(event.target.value)}
+							placeholder="optional"
+							type="text"
+							value={senderName}
+						/>
+					</span>
+				</div>
 				<div class="input-wrapper">
 					<label for="boostagram">{messageLabel}</label>
 					<textarea

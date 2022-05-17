@@ -154,8 +154,9 @@
 				composed: true,
 			}),
 		);
-
-		lnpayTermsRejected = true;
+		setTimeout(() => {
+			lnpayTermsRejected = true;
+		}, 500);
 	};
 
 	const calculateNormalizedSplits = (recipients: ValueRecipient[]) => {

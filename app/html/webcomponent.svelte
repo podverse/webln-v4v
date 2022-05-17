@@ -137,12 +137,24 @@
 		await enableWebLN();
 		lnpayTermsAccepted = true;
 
-		dispatchEvent(new CustomEvent("LNURL-Widget-Terms-Accepted", { bubbles: true }));
+		dispatchEvent(
+			new CustomEvent("LNURL-Widget-Terms-Accepted", {
+				bubbles: true,
+				cancelable: false,
+				composed: true,
+			}),
+		);
 	};
 
 	const rejectTerms = () => {
 		lnpayTermsRejected = true;
-		dispatchEvent(new CustomEvent("LNURL-Widget-Terms-Rejected", { bubbles: true }));
+		dispatchEvent(
+			new CustomEvent("LNURL-Widget-Terms-Rejected", {
+				bubbles: true,
+				cancelable: false,
+				composed: true,
+			}),
+		);
 	};
 
 	const calculateNormalizedSplits = (recipients: ValueRecipient[]) => {
@@ -355,6 +367,8 @@
 		dispatchEvent(
 			new CustomEvent("LNURL-Widget-New-Default-Values", {
 				bubbles: true,
+				cancelable: false,
+				composed: true,
 				detail: {
 					defaultAppAmount: appRecipientValue,
 					defaultContentCreatorAmount: recipientValue,

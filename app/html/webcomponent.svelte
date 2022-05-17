@@ -325,7 +325,11 @@
 		boostIsSending = true;
 
 		for (const boostPromise of boostPromises) {
-			await boostPromise();
+			try {
+				await boostPromise();
+			} catch (error) {
+				console.log("Boost failed:", error);
+			}
 		}
 
 		boostIsSending = false;

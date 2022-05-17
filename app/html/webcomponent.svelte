@@ -147,15 +147,15 @@
 	};
 
 	const rejectTerms = () => {
-		lnpayTermsRejected = true;
+		dispatchEvent(
+			new CustomEvent("LNURL-Widget-Terms-Rejected", {
+				bubbles: true,
+				cancelable: false,
+				composed: true,
+			}),
+		);
 
-		// dispatchEvent(
-		// 	new CustomEvent("LNURL-Widget-Terms-Rejected", {
-		// 		bubbles: true,
-		// 		cancelable: false,
-		// 		composed: true,
-		// 	}),
-		// );
+		lnpayTermsRejected = true;
 	};
 
 	const calculateNormalizedSplits = (recipients: ValueRecipient[]) => {

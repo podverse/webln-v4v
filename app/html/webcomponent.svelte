@@ -535,8 +535,8 @@
 						<table class="splits-table">
 							<tr>
 								<th>Name / Address</th>
-								<th>Split</th>
-								<th>Total Sats</th>
+								<th class="no-wrap">%</th>
+								<th class="no-wrap">Total</th>
 							</tr>
 							{#each normalizedRecipients as recipient}
 								<tr>
@@ -550,8 +550,8 @@
 											<div class="custom-value">Custom Value: {recipient.customValue}</div>
 										{/if}
 									</td>
-									<td class="center">{recipient.normalizedSplit}</td>
-									<td class="center">{recipient.amount}{recipient.amount < 10 ? "*" : ""}</td>
+									<td class="center no-wrap">{recipient.normalizedSplit}</td>
+									<td class="center no-wrap">{recipient.amount}{recipient.amount < 10 ? "*" : ""}</td>
 								</tr>
 							{/each}
 							{#if appRecipientLNAddress && appRecipientValue > 0}
@@ -567,7 +567,9 @@
 										{/if}
 									</td>
 									<td class="center" />
-									<td class="center">{appRecipientValue}{appRecipientValue < 10 ? "*" : ""}</td>
+									<td class="center no-wrap"
+										>{appRecipientValue}{appRecipientValue < 10 ? "*" : ""}</td
+									>
 								</tr>
 							{/if}
 						</table>

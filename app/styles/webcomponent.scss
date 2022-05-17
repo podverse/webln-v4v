@@ -23,6 +23,10 @@
 		@include focus-colors;
 	}
 
+  .no-wrap {
+    white-space: nowrap;
+  }
+
 	.loader {
 		border: 6px solid var(--lnurl-loader-border-color, #ccc);
 		border-top: 6px solid var(--lnurl-loader-border-color-2, #333);
@@ -223,6 +227,7 @@
 			th {
 				border-right: 1px solid var(--lnurl-table-border-color, gray);
 				padding: 4px 8px;
+        white-space: nowrap;
 
 				&:last-child {
 					border-right: 0;

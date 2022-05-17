@@ -27,7 +27,7 @@
 		border: 6px solid var(--lnurl-loader-border-color, #ccc);
 		border-top: 6px solid var(--lnurl-loader-border-color-2, #333);
 		border-radius: 50%;
-		margin: auto;
+		margin: 16px auto;
 		width: 32px;
 		height: 32px;
 		animation: spin 1.5s linear infinite;
@@ -187,8 +187,9 @@
 			.loader {
 				border: 3px solid var(--lnurl-loader-border-color, #ccc);
 				border-top: 3px solid var(--lnurl-loader-border-color-2, #333);
-				width: 16px;
 				height: 16px;
+        margin: 0;
+				width: 16px;
 			}
 		}
 

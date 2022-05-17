@@ -354,7 +354,7 @@
 		if (lnpayInitialized && v4v_tag) {
 			try {
 				const valueTag: ValueTag = JSON.parse(v4v_tag);
-				prepareBoostPromises(valueTag, recipientValue, appRecipientValue);
+				prepareBoostPromises(valueTag);
 			} catch (error) {
 				errorMessage = "Invalid v4v data.";
 			}

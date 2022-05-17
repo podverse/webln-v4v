@@ -6,7 +6,7 @@
 
 <!-- all-shields/header-badges:END -->
 
-A library for rendering a basic, draggable UI widget for sending Bitcoin Lightning payments with an LNURL compatible browser extension.
+A library for rendering a UI widget for sending Bitcoin Lightning payments with an LNURL compatible browser extension.
 
 ## DISCLAIMER 🚨🚨🚨
 

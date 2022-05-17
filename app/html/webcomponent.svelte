@@ -414,7 +414,7 @@
 
 <div id="lnurl-widget" part="lnurl-widget">
 	{#if lnpayTermsRejected}
-		<div class="buttons-wrapper">
+		<div class="buttons-wrapper align-left">
 			<button class="primary" id="show-terms" on:click={showTerms} type="button"> Show Menu </button>
 		</div>
 	{/if}

@@ -139,6 +139,10 @@
 		justify-content: center;
 		margin: 20px 0;
 
+    &.align-left {
+      justify-content: flex-start;
+    }
+
 		button {
 			all: unset;
 			align-items: center;

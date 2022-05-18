@@ -77,7 +77,8 @@
 	let appRecipientLabel = app_recipient_label || "App";
 	let appRecipientValue = parseInt(app_recipient_value_default, 10) || 0;
 	let contentType = content_type || "";
-	let hasAcceptedTerms = has_accepted_terms === "true";
+	let hasAcceptedTerms = document.querySelector("webln-v4v").getAttribute("has_accepted_terms") === "true";
+	console.log("asdfadsf", document.querySelector("webln-v4v").getAttributeNames());
 	console.log("has accepted", has_accepted_terms, hasAcceptedTerms);
 	let hasRejectedTerms = has_rejected_terms === "true";
 	let headerText = header_text || "Send a Bitcoin donation to this content creator and app.";

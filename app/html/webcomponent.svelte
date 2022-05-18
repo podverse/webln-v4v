@@ -78,6 +78,7 @@
 	let appRecipientValue = parseInt(app_recipient_value_default, 10) || 0;
 	let contentType = content_type || "";
 	let hasAcceptedTerms = has_accepted_terms === "true";
+	console.log("has accepted", has_accepted_terms, hasAcceptedTerms);
 	let hasRejectedTerms = has_rejected_terms === "true";
 	let headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
 	let messageLabel = message_label || "Boostagram";

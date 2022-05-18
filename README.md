@@ -6,7 +6,7 @@
 
 <!-- all-shields/header-badges:END -->
 
-A library for rendering a UI widget for sending Bitcoin Lightning payments with a WebLN compatible browser extension.
+A library for easily rendering a form on-page that lets your webpage visitors send Bitcoin Lightning payments with a WebLN compatible browser extension..
 
 ## DISCLAIMER 🚨🚨🚨
 

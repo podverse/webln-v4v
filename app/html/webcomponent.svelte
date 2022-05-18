@@ -168,9 +168,11 @@
 		}, 0);
 
 		normalizedValueRecipients = recipients.map((recipient) => {
+			let normalizedSplit = (parseFloat(recipient.split) / totalSplit) * 100;
+			normalizedSplit = normalizedSplit > 0 && normalizedSplit < 1 ? 1 : Math.floor(normalizedSplit);
 			return {
 				...recipient,
-				normalizedSplit: (parseFloat(recipient.split) / totalSplit) * 100,
+				normalizedSplit,
 				amount: 0, // TODO: hacky code. This will get set in normalizeValueRecipients.
 			};
 		});
@@ -189,7 +191,7 @@
 			normalizedValueRecipient?.type
 		);
 
-	export const normalizeValueRecipients = (recipients: ValueRecipient[], total: number, roundDownValues: boolean) => {
+	export const normalizeValueRecipients = (recipients: ValueRecipient[], total: number) => {
 		const normalizedValueRecipients: ValueRecipientNormalized[] = calculateNormalizedSplits(recipients);
 		const feeRecipient = normalizedValueRecipients.find((valueRecipient) => valueRecipient.fee === true);
 		let feeAmount = 0;
@@ -206,7 +208,7 @@
 				amount = feeAmount;
 			}
 
-			amount = roundDownValues ? Math.floor(amount) : amount;
+			amount = amount > 1 ? Math.floor(amount) : amount;
 
 			finalNormalizedValueRecipients.push({
 				...normalizedValueRecipient,
@@ -217,7 +219,7 @@
 		return finalNormalizedValueRecipients;
 	};
 
-	const generateBoost = (valueSATTotal: number, name) => {
+	const generateBoost = (valueSATTotal: number, name: string) => {
 		let boost: any = {
 			action: "boost",
 			value_msat_total: valueSATTotal * 1000,
@@ -277,8 +279,7 @@
 		try {
 			boostPromises = [];
 			const { recipients } = valueTag;
-			const roundDownValues = true;
-			normalizedRecipients = normalizeValueRecipients(recipients, recipientValue, roundDownValues);
+			normalizedRecipients = normalizeValueRecipients(recipients, recipientValue);
 
 			if (
 				valueTag.type === "lightning" &&

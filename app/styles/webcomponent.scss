@@ -9,15 +9,15 @@
  */
 
 @mixin focus-colors {
-	box-shadow: var(--lnurl-button-focus-box-shadow, gray);
-	outline: 1px solid var(--lnurl-button-focus-ouline-color, gray);
+	box-shadow: var(--webln-button-focus-box-shadow, gray);
+	outline: 1px solid var(--webln-button-focus-ouline-color, gray);
 }
 
-#lnurl-widget {
-	background-color: var(--lnurl-background-color, white);
-	color: var(--lnurl-text, black);
-	font-family: var(--lnurl-font-family, Arial, Helvetica, sans-serif);
-	max-width: var(--lnurl-max-width, 500px);
+#webln-v4v {
+	background-color: var(--webln-background-color, white);
+	color: var(--webln-text, black);
+	font-family: var(--webln-font-family, Arial, Helvetica, sans-serif);
+	max-width: var(--webln-max-width, 500px);
 
 	:focus {
 		@include focus-colors;
@@ -28,8 +28,8 @@
 	}
 
 	.loader {
-		border: 6px solid var(--lnurl-loader-border-color, #ccc);
-		border-top: 6px solid var(--lnurl-loader-border-color-2, #333);
+		border: 6px solid var(--webln-loader-border-color, #ccc);
+		border-top: 6px solid var(--webln-loader-border-color-2, #333);
 		border-radius: 50%;
 		margin: 16px auto;
 		width: 32px;
@@ -48,19 +48,19 @@
 
 	a {
 		&:link {
-			color: var(--lnurl-link-color, -webkit-link);
+			color: var(--webln-link-color, -webkit-link);
 		}
 
 		&:active {
-			color: var(--lnurl-link-color-active, -webkit-link);
+			color: var(--webln-link-color-active, -webkit-link);
 		}
 
 		&:visited {
-			color: var(--lnurl-link-color-visited, -webkit-link);
+			color: var(--webln-link-color-visited, -webkit-link);
 		}
 
 		&:hover {
-			color: var(--lnurl-link-color-hover, -webkit-link);
+			color: var(--webln-link-color-hover, -webkit-link);
 		}
 	}
 
@@ -88,9 +88,9 @@
 
 		input[type="number"] {
 			all: unset;
-			background-color: var(--lnurl-text-input-background-color, white);
-			border: 1px solid var(--lnurl-input-border, gray);
-			color: var(--lnurl-text, black);
+			background-color: var(--webln-text-input-background-color, white);
+			border: 1px solid var(--webln-input-border, gray);
+			color: var(--webln-text, black);
 			max-width: 100px;
 			padding: 6px 8px;
 
@@ -101,9 +101,9 @@
 
 		input[type="text"] {
 			all: unset;
-			background-color: var(--lnurl-text-input-background-color, white);
-			border: 1px solid var(--lnurl-input-border, gray);
-			color: var(--lnurl-text, black);
+			background-color: var(--webln-text-input-background-color, white);
+			border: 1px solid var(--webln-input-border, gray);
+			color: var(--webln-text, black);
 			max-width: 150px;
 			padding: 6px 8px;
 
@@ -118,9 +118,9 @@
 		}
 
 		textarea {
-			background-color: var(--lnurl-text-input-background-color, white);
-			border: 1px solid var(--lnurl-input-border, gray);
-			color: var(--lnurl-text, black);
+			background-color: var(--webln-text-input-background-color, white);
+			border: 1px solid var(--webln-input-border, gray);
+			color: var(--webln-text, black);
 			font-size: 16px;
 			padding: 6px 8px;
 
@@ -133,7 +133,7 @@
 			}
 
 			&::placeholder {
-				color: var(--lnurl-input-placeholder, gray);
+				color: var(--webln-input-placeholder, gray);
 			}
 		}
 	}
@@ -150,41 +150,41 @@
 		button {
 			all: unset;
 			align-items: center;
-			border-radius: var(--lnurl-button-border-radius, 36px);
+			border-radius: var(--webln-button-border-radius, 36px);
 			cursor: pointer;
 			display: flex;
 			flex: 0 0 auto;
-			font-size: var(--lnurl-button-font-size, 14px);
+			font-size: var(--webln-button-font-size, 14px);
 			font-weight: bold;
-			height: var(--lnurl-button-height, 36px);
-			min-width: var(--lnurl-button-min-width, 120px);
+			height: var(--webln-button-height, 36px);
+			min-width: var(--webln-button-min-width, 120px);
 			justify-content: center;
-			margin-left: var(--lnurl-button-margin-left, 16px);
-			padding: var(--lnurl-button-padding-v, 4px) var(--lnurl-button-padding-h, 8px);
+			margin-left: var(--webln-button-margin-left, 16px);
+			padding: var(--webln-button-padding-v, 4px) var(--webln-button-padding-h, 8px);
 			position: relative;
 
 			&.primary {
-				background-color: var(--lnurl-button-primary-background-color, #ccc);
-				color: var(--lnurl-button-primary-text-color, #333);
+				background-color: var(--webln-button-primary-background-color, #ccc);
+				color: var(--webln-button-primary-text-color, #333);
 
 				&:hover {
-					background-color: var(--lnurl-button-primary-background-color-hover, #ddd);
+					background-color: var(--webln-button-primary-background-color-hover, #ddd);
 				}
 			}
 
 			&.secondary {
-				background-color: var(--lnurl-button-secondary-background-color, #ccc);
-				color: var(--lnurl-button-secondary-text-color, #333);
+				background-color: var(--webln-button-secondary-background-color, #ccc);
+				color: var(--webln-button-secondary-text-color, #333);
 
 				&:hover {
-					background-color: var(--lnurl-button-secondary-background-color-hover, #ddd);
+					background-color: var(--webln-button-secondary-background-color-hover, #ddd);
 				}
 			}
 
 			&:disabled,
 			&:disabled:hover {
-				background-color: var(--lnurl-button-disabled-background-color, #777);
-				color: var(--lnurl-button-disabled-color, #eee);
+				background-color: var(--webln-button-disabled-background-color, #777);
+				color: var(--webln-button-disabled-color, #eee);
 				cursor: not-allowed;
 			}
 
@@ -193,8 +193,8 @@
 			}
 
 			.loader {
-				border: 3px solid var(--lnurl-loader-border-color, #ccc);
-				border-top: 3px solid var(--lnurl-loader-border-color-2, #333);
+				border: 3px solid var(--webln-loader-border-color, #ccc);
+				border-top: 3px solid var(--webln-loader-border-color-2, #333);
 				height: 16px;
 				margin: 0;
 				width: 16px;
@@ -222,10 +222,10 @@
 			margin-top: 16px;
 			border-spacing: 0px;
 			border-collapse: separate;
-			border: 1px solid var(--lnurl-table-border-color, gray);
+			border: 1px solid var(--webln-table-border-color, gray);
 
 			th {
-				border-right: 1px solid var(--lnurl-table-border-color, gray);
+				border-right: 1px solid var(--webln-table-border-color, gray);
 				padding: 4px 8px;
 				white-space: nowrap;
 
@@ -235,8 +235,8 @@
 			}
 
 			td {
-				border-right: 1px solid var(--lnurl-table-border-color, gray);
-				border-top: 1px solid var(--lnurl-table-border-color, gray);
+				border-right: 1px solid var(--webln-table-border-color, gray);
+				border-top: 1px solid var(--webln-table-border-color, gray);
 				padding: 4px 8px;
 				overflow-wrap: break-word;
 				word-break: break-all;

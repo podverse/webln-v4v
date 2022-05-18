@@ -1,12 +1,12 @@
-# 🏗 lnurl-widget
+# 🏗 webln-v4v
 
 <!-- all-shields/header-badges:START -->
 
-[![v1.0.0-beta.19](https://img.shields.io/badge/version-v1.0.0--beta.19-lightgray.svg?style=flat&logo=)](https://github.com/podverse/lnurl-widget/blob/main/CHANGELOG.md) [![](https://img.shields.io/npm/v/lnurl-widget?color=CC3534&logo=npm)](https://www.npmjs.com/package/lnurl-widget) [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat&logo=license)](https://github.com/podverse/lnurl-widget/blob/main/LICENSE.md) [![Powered By Svelte](https://img.shields.io/badge/powered%20by-svelte-FF3C02.svg?style=flat&logo=svelte)](https://svelte.dev/) [![Language: TypeScript](https://img.shields.io/badge/language-typescript-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![ECMAScript: 2019](https://img.shields.io/badge/ES-9-F7DF1E.svg?style=flat&logo=javascript)](https://github.com/tc39/ecma262) [![Discord Server](https://discordapp.com/api/guilds/383373985666301975/embed.png)](https://discord.ptkdev.io)
+[![v1.0.0-beta.19](https://img.shields.io/badge/version-v1.0.0--beta.19-lightgray.svg?style=flat&logo=)](https://github.com/podverse/webln-v4v/blob/main/CHANGELOG.md) [![](https://img.shields.io/npm/v/webln-v4v?color=CC3534&logo=npm)](https://www.npmjs.com/package/webln-v4v) [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat&logo=license)](https://github.com/podverse/webln-v4v/blob/main/LICENSE.md) [![Powered By Svelte](https://img.shields.io/badge/powered%20by-svelte-FF3C02.svg?style=flat&logo=svelte)](https://svelte.dev/) [![Language: TypeScript](https://img.shields.io/badge/language-typescript-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![ECMAScript: 2019](https://img.shields.io/badge/ES-9-F7DF1E.svg?style=flat&logo=javascript)](https://github.com/tc39/ecma262) [![Discord Server](https://discordapp.com/api/guilds/383373985666301975/embed.png)](https://discord.ptkdev.io)
 
 <!-- all-shields/header-badges:END -->
 
-A library for rendering a UI widget for sending Bitcoin Lightning payments with an LNURL compatible browser extension.
+A library for rendering a UI widget for sending Bitcoin Lightning payments with a WebLN compatible browser extension.
 
 ## DISCLAIMER 🚨🚨🚨
 
@@ -53,10 +53,10 @@ Thank you to [@ptkdev](https://github.com/ptkdev) for creating the [svelte-webco
 -   🔨 [Developer Mode](#-developer-mode)
 -   -   🏁 [Run Project](#-run-project)
 -   -   💾 [Setup Project](#-setup-project)
--   🐛 [Known Bugs](https://github.com/podverse/lnurl-widget/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
+-   🐛 [Known Bugs](https://github.com/podverse/webln-v4v/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 -   🍻 Community:
--   <img src="https://raw.githubusercontent.com/podverse/lnurl-widget/main/.github/assets/social_discord.png" height="18px"> [Discord](https://discord.com/invite/6HkyNKR))
--   <img src="https://raw.githubusercontent.com/podverse/lnurl-widget/main/.github/assets/social_twitter.png" height="18px"> [Twitter](http://twitter.com/podverse)
+-   <img src="https://raw.githubusercontent.com/podverse/webln-v4v/main/.github/assets/social_discord.png" height="18px"> [Discord](https://discord.com/invite/6HkyNKR))
+-   <img src="https://raw.githubusercontent.com/podverse/webln-v4v/main/.github/assets/social_twitter.png" height="18px"> [Twitter](http://twitter.com/podverse)
 
 ## 💡 Features
 
@@ -84,13 +84,13 @@ Thank you to [@ptkdev](https://github.com/ptkdev) for creating the [svelte-webco
 1. Add html code to your page:
 
 ```html
-<lnurl-widget header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></lnurl-widget>
+<webln-v4v header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></webln-v4v>
 ```
 
 2. Require javascript in yourpage (before `</body>`):
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/lnurl-widget@latest/dist/webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/webln-v4v@latest/dist/webcomponent.js"></script>
 ```
 
 You can replace `@latest` with specific version, example `@2.0.1`.
@@ -99,99 +99,99 @@ Below is available a description of `options` values.
 
 ## 📦 Installation (NPM Module - Browserify/Webpack)
 
-1. Install npm module: `npm install lnurl-widget --save`
+1. Install npm module: `npm install webln-v4v --save`
 2. Add html code to your page:
 
 ```html
-<lnurl-widget header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></lnurl-widget>
+<webln-v4v header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></webln-v4v>
 ```
 
 3. Require javascript in your app:
 
 ```javascript
-require("lnurl-widget");
+require("webln-v4v");
 ```
 
 or
 
 ```javascript
-import "lnurl-widget";
+import "webln-v4v";
 ```
 
 Below is available a description of `options` values.
 
 ## 📖 Installation (Wordpress)
 
-1. Download wordpress plugin from [mirror](https://cdn.jsdelivr.net/npm/lnurl-widget@latest/dist/wordpress/lnurl-widget-wordpress-plugin.zip) and install it.
+1. Download wordpress plugin from [mirror](https://cdn.jsdelivr.net/npm/webln-v4v@latest/dist/wordpress/webln-v4v-wordpress-plugin.zip) and install it.
 1. Add code to your html widget, example: `Appearance` --> `Widget` --> insert `HTML Widget` and paste html code:
 
 ```html
-<lnurl-widget header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></lnurl-widget>
+<webln-v4v header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></webln-v4v>
 ```
 
 You can insert this html code in posts, widget, html box or theme.
 
 ## 🔵 Installation (React)
 
-1. Install npm module with `npm install lnurl-widget@latest --save`:
+1. Install npm module with `npm install webln-v4v@latest --save`:
 2. Import module in your `src/App.js` on header:
 
 ```javascript
-import "lnurl-widget";
+import "webln-v4v";
 ```
 
 3. Add html code to your `App.js` template:
 
 ```html
-<lnurl-widget header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></lnurl-widget>
+<webln-v4v header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></webln-v4v>
 ```
 
 ## 🔴 Installation (Angular)
 
-1. Install npm module with `npm install lnurl-widget@latest --save`:
+1. Install npm module with `npm install webln-v4v@latest --save`:
 2. Import module in your `app/app.modules.ts` on header:
 
 ```javascript
-import "lnurl-widget";
+import "webln-v4v";
 ```
 
 3. Add html code to your html component:
 
 ```html
-<lnurl-widget header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></lnurl-widget>
+<webln-v4v header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></webln-v4v>
 ```
 
 ## 🟠 Installation (Svelte)
 
-1. Install npm module with `npm install lnurl-widget@latest --save`:
+1. Install npm module with `npm install webln-v4v@latest --save`:
 2. Import module in your `src/App.svelte` on header:
 
 ```javascript
-import "lnurl-widget";
+import "webln-v4v";
 ```
 
 3. Add html code to your html component:
 
 ```html
-<lnurl-widget header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></lnurl-widget>
+<webln-v4v header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></webln-v4v>
 ```
 
 ## 🟢 Installation (Vue)
 
-1. Install npm module with `npm install lnurl-widget@latest --save`:
+1. Install npm module with `npm install webln-v4v@latest --save`:
 2. Import module in your `src/App.vue` and add webcomponent to ignoreElements of vue config:
 
 ```javascript
 import Vue from "vue";
-import "lnurl-widget";
+import "webln-v4v";
 
-Vue.config.ignoredElements = ["lnurl-widget"];
+Vue.config.ignoredElements = ["webln-v4v"];
 ```
 
 3. Add html code to your html component:
 
 ```html
-<lnurl-widget header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></lnurl-widget>
+<webln-v4v header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></webln-v4v>
 ```
 
 ## 🧰 Options / Attributes
@@ -205,7 +205,7 @@ Vue.config.ignoredElements = ["lnurl-widget"];
 #### HTML Code with attributes:
 
 ```html
-<lnurl-widget header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></lnurl-widget>
+<webln-v4v header="make" flip="svelte,webcomponents,opensource" footer="awesome!"></webln-v4v>
 ```
 
 ## 🎨 CSS Customization
@@ -214,7 +214,7 @@ You can overwrite default css with selector `::part`, example:
 
 ```html
 <style>
-	lnurl-widget::part(flip) {
+	webln-v4v::part(flip) {
 		border: 2px solid red;
 	}
 </style>
@@ -226,7 +226,7 @@ Part attribute is, generally, suffix of a class. Use chrome inspector for get th
 
 #### 🏁 Run Project
 
-1. Clone this repository or download [nightly](https://github.com/podverse/lnurl-widget/archive/nightly.zip), [beta](https://github.com/podverse/lnurl-widget/archive/beta.zip) or [stable](https://github.com/podverse/lnurl-widget/archive/main.zip).
+1. Clone this repository or download [nightly](https://github.com/podverse/webln-v4v/archive/nightly.zip), [beta](https://github.com/podverse/webln-v4v/archive/beta.zip) or [stable](https://github.com/podverse/webln-v4v/archive/main.zip).
 2. Run `npm install`
 3. Run `npm run dev`
 4. Run `http://localhost:5000`

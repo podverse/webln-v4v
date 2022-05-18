@@ -1,13 +1,13 @@
 {
-	"package_name": "lnurl-widget",
+	"package_name": "webln-v4v",
 	"package_org": "@podverse",
-	"display_name": "LNURL on-page widget",
-	"description": "A library for rendering a UI widget for sending Bitcoin Lightning payments with an LNURL compatible browser extension",
+	"display_name": "WebLN on-page widget",
+	"description": "A library for rendering a UI widget for sending Bitcoin Lightning payments with a WebLN compatible browser extension",
 	"author": "Mitch Downey [@mitchdowney] <contact@podverse.fm> (https://github.com/mitchdowney)",
 	"author_markdown": "[Mitch Downey](https://github.com/mitchdowney) ([@Podverse](https://twitter.com/podverse))",
 	"author_url": "https://github.com/mitchdowney",
 	"github_nickname": "podverse",
 	"github_repository_url": "github.com/podverse",
-	"github_full_repository_url": "github.com/podverse/lnurl-widget",
+	"github_full_repository_url": "github.com/podverse/webln-v4v",
 	"email": "contact@podverse.fm"
 }

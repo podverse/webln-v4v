@@ -11,7 +11,7 @@ module.exports = {
 	debug: "disabled",
 
 	// LOGS
-	// See: https://github.com/podverse/lnurl-widget-logger
+	// See: https://github.com/podverse/webln-v4v-logger
 	logger: {
 		path: {
 			debug_log: "./logs/debug.log",

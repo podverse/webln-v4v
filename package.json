@@ -1,7 +1,7 @@
 {
-	"name": "lnurl-widget",
-	"displayName": "LNURL on-page widget",
-	"description": "A library for rendering a UI widget for sending Bitcoin Lightning payments with an LNURL compatible browser extension",
+	"name": "webln-v4v",
+	"displayName": "WebLN on-page widget",
+	"description": "A library for rendering a UI widget for sending Bitcoin Lightning payments with a WebLN compatible browser extension",
 	"version": "1.0.0-beta.19",
 	"main": "dist/webcomponent.js",
 	"publishConfig": {
@@ -16,10 +16,10 @@
 	"homepage": "https://podverse.fm",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/podverse/lnurl-widget.git"
+		"url": "https://github.com/podverse/webln-v4v.git"
 	},
 	"bugs": {
-		"url": "https://github.com/podverse/lnurl-widget/issues"
+		"url": "https://github.com/podverse/webln-v4v/issues"
 	},
 	"engines": {
 		"node": ">=14.0.0"
@@ -35,7 +35,7 @@
 		"lint": "npm run lint-prettify && eslint . --cache --ext .ts,.js",
 		"lint-fix": "npm run lint-prettify && eslint . --cache --ext .ts,.js --fix",
 		"lint-prettify": "prettier --write --ignore-unknown '**/*.{ts,scss,md,json}'",
-		"git-set-upstream": "git remote add upstream git@github.com:ptkdev-boilerplate/lnurl-widget.git && git fetch upstream",
+		"git-set-upstream": "git remote add upstream git@github.com:ptkdev-boilerplate/webln-v4v.git && git fetch upstream",
 		"git-pull-upstream": "git pull upstream main && git pull upstream beta && git pull upstream nightly",
 		"git-pull": "git pull --recursive",
 		"git-hash": "ts-node scripts/githash.ts",

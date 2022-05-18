@@ -10,12 +10,12 @@
 // import type { ModuleInterface, ModuleResponseInterface } from "@app/types/webcomponent.interfaces";
 
 // /**
-//  * LNURL Widget
+//  * WebLN Widget
 //  * =====================
 //  *
-//  * Render a draggable LNURL widget on-page that can interact with LNURL-compatible browser extensions.
+//  * Render a draggable WebLN widget on-page that can interact with WebLN-compatible browser extensions.
 //  *
-//  * @interface [ModuleInterface ModuleResponseInterface](https://github.com/podverse/lnurl-widget/blob/main/app/webcomponent/types/module.interfaces.ts)
+//  * @interface [ModuleInterface ModuleResponseInterface](https://github.com/podverse/webln-v4v/blob/main/app/webcomponent/types/module.interfaces.ts)
 //  *
 //  * @param {string} {text} - input string
 //  *

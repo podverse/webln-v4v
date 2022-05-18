@@ -1,8 +1,8 @@
-<svelte:options tag="lnurl-widget" />
+<svelte:options tag="webln-v4v" />
 
 <script lang="ts">
 	/**
-	 * LNURL on-page widget
+	 * WebLN on-page widget
 	 * =====================
 	 *
 	 * @contributors: Mitch Downey [@mitchdowney] <contact@podverse.fm> (https://github.com/mitchdowney)
@@ -140,7 +140,7 @@
 		lnpayTermsAccepted = true;
 
 		dispatchEvent(
-			new CustomEvent("LNURL-Widget-Terms-Accepted", {
+			new CustomEvent("WebLN-V4V-Terms-Accepted", {
 				bubbles: true,
 				cancelable: false,
 				composed: true,
@@ -150,7 +150,7 @@
 
 	const rejectTerms = () => {
 		dispatchEvent(
-			new CustomEvent("LNURL-Widget-Terms-Rejected", {
+			new CustomEvent("WebLN-V4V-Terms-Rejected", {
 				bubbles: true,
 				cancelable: false,
 				composed: true,
@@ -368,7 +368,7 @@
 
 	const dispatchNewDefaultFormValues = () => {
 		dispatchEvent(
-			new CustomEvent("LNURL-Widget-New-Default-Values", {
+			new CustomEvent("WebLN-V4V-New-Default-Values", {
 				bubbles: true,
 				cancelable: false,
 				composed: true,
@@ -382,7 +382,7 @@
 	};
 
 	/*
-        TODO: Instead of a setTimeout, we should listen for a "lnurl is loaded" event.
+        TODO: Instead of a setTimeout, we should listen for a "webln is loaded" event.
         I don't think one exists at the moment.
     */
 	setTimeout(async () => {
@@ -403,7 +403,7 @@
 	}, 1500);
 </script>
 
-<div id="lnurl-widget" part="lnurl-widget">
+<div id="webln-v4v" part="webln-v4v">
 	{#if lnpayTermsRejected}
 		<div class="buttons-wrapper align-left">
 			<button class="primary" id="show-terms" on:click={showTerms} type="button"> Show Menu </button>
@@ -418,7 +418,7 @@
 		{/if}
 		{#if !lnpayTermsAccepted && !errorMessage}
 			<p>
-				This widget connects to your LNURL compatible browser extension to allow you to send Bitcoin over the
+				This widget connects to your WebLN compatible browser extension to allow you to send Bitcoin over the
 				Lightning Network to content creators.
 			</p>
 			<p>
@@ -444,7 +444,7 @@
 				>
 			</div>
 			<div class="links-wrapper">
-				<a href="https://github.com/podverse/lnurl-widget" target="_blank">Source Code</a>
+				<a href="https://github.com/podverse/webln-v4v" target="_blank">Source Code</a>
 			</div>
 		{/if}
 		{#if lnpayTermsAccepted && !errorMessage}

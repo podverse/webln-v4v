@@ -17,12 +17,12 @@
  */
 export interface ModuleInterface {
 	/**
-	 * Render LNURL widget
+	 * Render WebLN widget
 	 * =====================
 	 *
-	 * @interface [ModuleInterface](https://github.com/podverse/lnurl-widget/blob/main/app/webcomponent/types/module.interfaces.ts)
+	 * @interface [ModuleInterface](https://github.com/podverse/webln-v4v/blob/main/app/webcomponent/types/module.interfaces.ts)
 	 *
-	 * @param {string} app_name - the name of the app that is using the window.lnurl object
+	 * @param {string} app_name - the name of the app that is using the window.webln object
 	 * @param {string} message - text to send along with the boost. Also known as a "Boostagram".
 	 * @param {string} name - ???
 	 * @param {string} sender_name - ???
@@ -44,7 +44,7 @@ export interface ModuleInterface {
 export interface ModuleResponseInterface {
 	/**
 	 *
-	 * @interface [ModuleResponseInterface](https://github.com/podverse/lnurl-widget/blob/main/app/webcomponent/types/module.interfaces.ts)
+	 * @interface [ModuleResponseInterface](https://github.com/podverse/webln-v4v/blob/main/app/webcomponent/types/module.interfaces.ts)
 	 *
 	 * @return {fn}
 	 *

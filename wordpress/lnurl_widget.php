@@ -7,11 +7,11 @@ Version:     {{package.version}}
 Author:      {{package.author}}
 Author URI:  {{package.authorUrl}}
 License:     MIT
-License URI: https://github.com/podverse/lnurl-widget/main/LICENSE.md
+License URI: https://github.com/podverse/webln-v4v/main/LICENSE.md
 */
-function lnurl_widget_load(){
-	wp_enqueue_script("lnurl_widget", plugins_url('lnurl-widget', dirname(__FILE__))."/webcomponent.js", array(), false, true);
+function webln_v4v_load(){
+	wp_enqueue_script("webln_v4v", plugins_url('webln-v4v', dirname(__FILE__))."/webcomponent.js", array(), false, true);
 }
 
-add_action("wp_enqueue_scripts", "lnurl_widget_load");
+add_action("wp_enqueue_scripts", "webln_v4v_load");
 ?>

@@ -4,6 +4,6 @@
 		"license": "CC BY 4.0",
 		"contributors": ["Mitch Downey [@mitchdowney] <contact@podverse.fm> (https://github.com/mitchdowney)"]
 	},
-	"app_name": "lnurl-widget",
+	"app_name": "webln-v4v",
 	"hello": "Ciao {{name}}!"
 }

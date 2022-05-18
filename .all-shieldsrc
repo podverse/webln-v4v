@@ -8,7 +8,7 @@
 			"id": "header-badges",
 			"badges": [
 				{
-					"url": "https://github.com/podverse/lnurl-widget/blob/main/CHANGELOG.md",
+					"url": "https://github.com/podverse/webln-v4v/blob/main/CHANGELOG.md",
 					"color": "lightgray",
 					"label": "version",
 					"message": "v{{version}}",
@@ -18,16 +18,16 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://www.npmjs.com/package/lnurl-widget",
+					"url": "https://www.npmjs.com/package/webln-v4v",
 					"color": "#CC3534",
 					"label": "npm",
 					"logo": "npm",
 					"style": "flat",
-					"custom": "/npm/v/lnurl-widget?color=CC3534&logo=npm",
+					"custom": "/npm/v/webln-v4v?color=CC3534&logo=npm",
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/podverse/lnurl-widget/blob/main/LICENSE.md",
+					"url": "https://github.com/podverse/webln-v4v/blob/main/LICENSE.md",
 					"color": "brightgreen",
 					"label": "license",
 					"message": "{{license}}",
@@ -127,7 +127,7 @@
 			"id": "projects-badges2",
 			"badges": [
 				{
-					"url": "https://github.com/podverse/lnurl-widget-logger",
+					"url": "https://github.com/podverse/webln-v4v-logger",
 					"color": "#9b59b6",
 					"label": "🦒 Tools",
 					"message": "Node Logger",
@@ -290,7 +290,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/podverse/lnurl-widget-stickers#-installation",
+					"url": "https://github.com/podverse/webln-v4v-stickers#-installation",
 					"color": "#2ecc71",
 					"label": "📱 App",
 					"message": "Stickers",

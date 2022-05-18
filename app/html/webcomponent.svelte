@@ -545,10 +545,10 @@
 										>{recipient.name}
 										<div class="address">{recipient.address}</div>
 										{#if recipient.customKey}
-											<div class="custom-key">Custom Key: {recipient.customKey}</div>
+											<div class="custom-key">Key: {recipient.customKey}</div>
 										{/if}
 										{#if recipient.customValue}
-											<div class="custom-value">Custom Value: {recipient.customValue}</div>
+											<div class="custom-value">Value: {recipient.customValue}</div>
 										{/if}
 									</td>
 									<td class="center no-wrap">{recipient.normalizedSplit}</td>
@@ -561,10 +561,10 @@
 										>{appName}
 										<div class="address">{appRecipientLNAddress}</div>
 										{#if appRecipientCustomKey}
-											<div class="custom-key">Custom Key: {appRecipientCustomKey}</div>
+											<div class="custom-key">Key: {appRecipientCustomKey}</div>
 										{/if}
 										{#if appRecipientCustomValue}
-											<div class="custom-value">Custom Value: {appRecipientCustomValue}</div>
+											<div class="custom-value">Value: {appRecipientCustomValue}</div>
 										{/if}
 									</td>
 									<td class="center" />

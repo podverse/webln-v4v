@@ -168,8 +168,8 @@
 		}, 0);
 
 		normalizedValueRecipients = recipients.map((recipient) => {
-			let normalizedSplit = (parseFloat(recipient.split) / totalSplit) * 100;
-			normalizedSplit = normalizedSplit > 0 && normalizedSplit < 1 ? 1 : Math.floor(normalizedSplit);
+			const normalizedSplit = (parseFloat(recipient.split) / totalSplit) * 100;
+
 			return {
 				...recipient,
 				normalizedSplit,
@@ -193,20 +193,10 @@
 
 	export const normalizeValueRecipients = (recipients: ValueRecipient[], total: number) => {
 		const normalizedValueRecipients: ValueRecipientNormalized[] = calculateNormalizedSplits(recipients);
-		const feeRecipient = normalizedValueRecipients.find((valueRecipient) => valueRecipient.fee === true);
-		let feeAmount = 0;
-		if (feeRecipient) {
-			feeAmount = (total / 100) * (feeRecipient.normalizedSplit || 0);
-			total = total - feeAmount;
-		}
 
 		const finalNormalizedValueRecipients: ValueRecipientNormalized[] = [];
 		for (const normalizedValueRecipient of normalizedValueRecipients) {
 			let amount = (total / 100) * (normalizedValueRecipient.normalizedSplit || 0);
-
-			if (feeAmount && normalizedValueRecipient.fee) {
-				amount = feeAmount;
-			}
 
 			amount = amount > 1 ? Math.floor(amount) : amount;
 

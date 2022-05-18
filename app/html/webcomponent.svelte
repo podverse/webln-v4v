@@ -169,7 +169,7 @@
 
 		normalizedValueRecipients = recipients.map((recipient) => {
 			let normalizedSplit = (parseFloat(recipient.split) / totalSplit) * 100;
-			normalizedSplit = parseFloat(normalizedSplit.toFixed(2));
+			normalizedSplit = parseFloat(normalizedSplit.toFixed(1));
 
 			return {
 				...recipient,

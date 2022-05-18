@@ -13,7 +13,7 @@
 //  * WebLN Widget
 //  * =====================
 //  *
-//  * Render a draggable WebLN widget on-page that can interact with WebLN-compatible browser extensions.
+//  * Render a WebLN widget on-page that can interact with WebLN-compatible browser extensions.
 //  *
 //  * @interface [ModuleInterface ModuleResponseInterface](https://github.com/podverse/webln-v4v/blob/main/app/webcomponent/types/module.interfaces.ts)
 //  *

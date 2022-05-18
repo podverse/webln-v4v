@@ -2,7 +2,7 @@
 	"package_name": "webln-v4v",
 	"package_org": "@podverse",
 	"display_name": "WebLN on-page widget",
-	"description": "A library for easily rendering a form on-page that lets your webpage visitors send Bitcoin Lightning payments with a WebLN compatible browser extension.",
+	"description": "A library for easily rendering a form on-page that lets your webpage visitors send Bitcoin Lightning payments with a WebLN compatible browser extension. This library is intended to be used with the Podcasting 2.0 RSS namespace <podcast:value> for keysend payments.",
 	"author": "Mitch Downey [@mitchdowney] <contact@podverse.fm> (https://github.com/mitchdowney)",
 	"author_markdown": "[Mitch Downey](https://github.com/mitchdowney) ([@Podverse](https://twitter.com/podverse))",
 	"author_url": "https://github.com/mitchdowney",

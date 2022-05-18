@@ -6,7 +6,7 @@
 
 <!-- all-shields/header-badges:END -->
 
-A library for easily rendering a form on-page that lets your webpage visitors send Bitcoin Lightning payments with a WebLN compatible browser extension..
+A library for easily rendering a form on-page that lets your webpage visitors send Bitcoin Lightning payments with a WebLN compatible browser extension. This library is intended to be used with the Podcasting 2.0 RSS namespace <podcast:value> for keysend payments..
 
 ## DISCLAIMER 🚨🚨🚨
 

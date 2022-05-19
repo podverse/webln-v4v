@@ -47,6 +47,8 @@
 	}
 
 	a {
+    text-decoration: none;
+
 		&:link {
 			color: var(--webln-link-color, -webkit-link);
 		}

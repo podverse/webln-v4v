@@ -43,32 +43,32 @@
 		type: string;
 	};
 
-	const element = document.querySelector("webln-v4v");
+	const webcomponentElement = document.querySelector("webln-v4v");
 
-	const amount_max = element?.getAttribute("amount_max");
-	const amount_min = element?.getAttribute("amount_min");
-	const app_name = element?.getAttribute("app_name");
-	const app_recipient_custom_key = element?.getAttribute("app_recipient_custom_key");
-	const app_recipient_custom_value = element?.getAttribute("app_recipient_custom_value");
-	const app_recipient_ln_address = element?.getAttribute("app_recipient_ln_address");
-	const app_recipient_label = element?.getAttribute("app_recipient_label");
-	const app_recipient_value_default = element?.getAttribute("app_recipient_value_default");
-	const content_type = element?.getAttribute("content_type");
-	const has_accepted_terms = element?.getAttribute("has_accepted_terms");
-	const has_rejected_terms = element?.getAttribute("has_rejected_terms");
-	const header_text = element?.getAttribute("header_text");
-	const message_label = element?.getAttribute("message_label");
-	const message_placeholder = element?.getAttribute("message_placeholder");
-	const podcast_episode_title = element?.getAttribute("podcast_episode_title");
-	const podcast_podcast_index_id = element?.getAttribute("podcast_podcast_index_id");
-	const podcast_title = element?.getAttribute("podcast_title");
-	const recipient_label = element?.getAttribute("recipient_label");
-	const recipient_value_default = element?.getAttribute("recipient_value_default");
-	const send_button_label = element?.getAttribute("send_button_label");
-	const send_button_sent_label = element?.getAttribute("send_button_sent_label");
-	const sender_name = element?.getAttribute("sender_name");
-	const sender_name_label = element?.getAttribute("sender_name_label");
-	const v4v_tag = element?.getAttribute("v4v_tag");
+	const amount_max = webcomponentElement?.getAttribute("amount_max");
+	const amount_min = webcomponentElement?.getAttribute("amount_min");
+	const app_name = webcomponentElement?.getAttribute("app_name");
+	const app_recipient_custom_key = webcomponentElement?.getAttribute("app_recipient_custom_key");
+	const app_recipient_custom_value = webcomponentElement?.getAttribute("app_recipient_custom_value");
+	const app_recipient_ln_address = webcomponentElement?.getAttribute("app_recipient_ln_address");
+	const app_recipient_label = webcomponentElement?.getAttribute("app_recipient_label");
+	const app_recipient_value_default = webcomponentElement?.getAttribute("app_recipient_value_default");
+	const content_type = webcomponentElement?.getAttribute("content_type");
+	const has_accepted_terms = webcomponentElement?.getAttribute("has_accepted_terms");
+	const has_rejected_terms = webcomponentElement?.getAttribute("has_rejected_terms");
+	const header_text = webcomponentElement?.getAttribute("header_text");
+	const message_label = webcomponentElement?.getAttribute("message_label");
+	const message_placeholder = webcomponentElement?.getAttribute("message_placeholder");
+	const podcast_episode_title = webcomponentElement?.getAttribute("podcast_episode_title");
+	const podcast_podcast_index_id = webcomponentElement?.getAttribute("podcast_podcast_index_id");
+	const podcast_title = webcomponentElement?.getAttribute("podcast_title");
+	const recipient_label = webcomponentElement?.getAttribute("recipient_label");
+	const recipient_value_default = webcomponentElement?.getAttribute("recipient_value_default");
+	const send_button_label = webcomponentElement?.getAttribute("send_button_label");
+	const send_button_sent_label = webcomponentElement?.getAttribute("send_button_sent_label");
+	const sender_name = webcomponentElement?.getAttribute("sender_name");
+	const sender_name_label = webcomponentElement?.getAttribute("sender_name_label");
+	const v4v_tag = webcomponentElement?.getAttribute("v4v_tag");
 
 	let amountMin: number | null;
 	let amountMax: number | null;
@@ -97,7 +97,6 @@
 	let boostIsSending: boolean;
 	let boostWasSent: boolean;
 	let errorMessage: string;
-	let lnpayInitialized: boolean;
 	let lnpayTermsAccepted: boolean;
 	let lnpayTermsRejected: boolean;
 	let message: string;
@@ -108,6 +107,7 @@
 	let normalizedRecipients: ValueRecipientNormalized[] = [];
 
 	let isInitialLoad = true;
+	let lnpayInitialized = false;
 
 	const getRecipientLabel = () => {
 		let recipientLabel = "Content Creator";
@@ -147,7 +147,6 @@
 		boostIsSending = false;
 		boostWasSent = false;
 		errorMessage = "";
-		lnpayInitialized = false;
 		lnpayTermsAccepted = hasAcceptedTerms;
 		lnpayTermsRejected = hasRejectedTerms;
 		message = "";
@@ -158,11 +157,24 @@
 		normalizedRecipients = [];
 	};
 
-	const initialize = () => {
+	const initialize = async () => {
 		isInitialLoad = false;
 		initializeVariables();
 		// check if the user has webln and keysend (currently Alby)
-		return !(typeof window.webln === "undefined" || !window.webln.keysend);
+		lnpayInitialized = !(typeof window.webln === "undefined" || !window.webln.keysend);
+
+		if (lnpayTermsAccepted) {
+			await enableWebLN();
+		}
+
+		if (lnpayInitialized && v4v_tag) {
+			try {
+				const valueTag: ValueTag = JSON.parse(v4v_tag);
+				prepareBoostPromises(valueTag);
+			} catch (error) {
+				errorMessage = "Invalid v4v data.";
+			}
+		}
 	};
 
 	const enableWebLN = async () => {
@@ -424,25 +436,26 @@
 		);
 	};
 
+	const observer = new MutationObserver(function (mutations) {
+		mutations.forEach(function (mutation) {
+			if (mutation.type === "attributes") {
+				initialize();
+			}
+		});
+	});
+
+	if (webcomponentElement) {
+		observer.observe(webcomponentElement, {
+			attributes: true,
+		});
+	}
+
 	/*
         TODO: Instead of a setTimeout, we should listen for a "webln is loaded" event.
         I don't think one exists at the moment.
     */
 	setTimeout(async () => {
-		lnpayInitialized = initialize();
-
-		if (lnpayTermsAccepted) {
-			await enableWebLN();
-		}
-
-		if (lnpayInitialized && v4v_tag) {
-			try {
-				const valueTag: ValueTag = JSON.parse(v4v_tag);
-				prepareBoostPromises(valueTag);
-			} catch (error) {
-				errorMessage = "Invalid v4v data.";
-			}
-		}
+		initialize();
 	}, 1000);
 </script>
 

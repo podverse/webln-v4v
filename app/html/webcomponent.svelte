@@ -43,7 +43,7 @@
 		type: string;
 	};
 
-	const webcomponentElement = document.querySelector("webln-v4v");
+	let webcomponentElement: HTMLElement | null = null;
 
 	let amountMin: number | null;
 	let amountMax: number | null;
@@ -95,6 +95,7 @@
 	};
 
 	const initializeVariables = () => {
+		webcomponentElement = document.querySelector("webln-v4v");
 		const amount_max = webcomponentElement?.getAttribute("amount_max");
 		const amount_min = webcomponentElement?.getAttribute("amount_min");
 		const app_name = webcomponentElement?.getAttribute("app_name");
@@ -177,6 +178,21 @@
 				enableWebLN();
 			}
 		}, 1500);
+
+		const observer = new MutationObserver(function (mutations) {
+			mutations.forEach(function (mutation) {
+				if (mutation.type === "attributes") {
+					console.log("attribute changed");
+					initialize();
+				}
+			});
+		});
+
+		if (webcomponentElement) {
+			observer.observe(webcomponentElement, {
+				attributes: true,
+			});
+		}
 	};
 
 	const enableWebLN = async () => {
@@ -444,21 +460,6 @@
     */
 
 	initialize();
-
-	const observer = new MutationObserver(function (mutations) {
-		mutations.forEach(function (mutation) {
-			if (mutation.type === "attributes") {
-				console.log("attribute changed");
-				initialize();
-			}
-		});
-	});
-
-	if (webcomponentElement) {
-		observer.observe(webcomponentElement, {
-			attributes: true,
-		});
-	}
 </script>
 
 <div id="webln-v4v" part="webln-v4v">

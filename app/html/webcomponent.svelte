@@ -43,7 +43,7 @@
 		type: string;
 	};
 
-	let webcomponentElement: HTMLElement | null;
+	const webcomponentElement = document.querySelector("webln-v4v");
 
 	let amountMin: number | null;
 	let amountMax: number | null;
@@ -82,7 +82,6 @@
 	let boostPromises: any[] = [];
 	let normalizedRecipients: ValueRecipientNormalized[] = [];
 
-	let isInitialLoad = true;
 	let lnpayInitialized = false;
 
 	const getRecipientLabel = (recipient_label?: string | null) => {
@@ -96,8 +95,6 @@
 	};
 
 	const initializeVariables = () => {
-		webcomponentElement = document.querySelector("webln-v4v");
-
 		const amount_max = webcomponentElement?.getAttribute("amount_max");
 		const amount_min = webcomponentElement?.getAttribute("amount_min");
 		const app_name = webcomponentElement?.getAttribute("app_name");
@@ -162,14 +159,9 @@
 	};
 
 	const initialize = async () => {
-		isInitialLoad = false;
 		initializeVariables();
 		// check if the user has webln and keysend (currently Alby)
 		lnpayInitialized = !(typeof window.webln === "undefined" || !window.webln.keysend);
-
-		if (lnpayTermsAccepted) {
-			await enableWebLN();
-		}
 
 		if (lnpayInitialized && v4vString) {
 			try {
@@ -179,6 +171,12 @@
 				errorMessage = "Invalid v4v data.";
 			}
 		}
+
+		setTimeout(() => {
+			if (lnpayTermsAccepted) {
+				enableWebLN();
+			}
+		}, 1500);
 	};
 
 	const enableWebLN = async () => {
@@ -444,24 +442,23 @@
         TODO: Instead of a setTimeout, we should listen for a "webln is loaded" event.
         I don't think one exists at the moment.
     */
-	setTimeout(async () => {
-		initialize();
 
-		const observer = new MutationObserver(function (mutations) {
-			mutations.forEach(function (mutation) {
-				if (mutation.type === "attributes") {
-					console.log("attribute changed");
-					initialize();
-				}
-			});
+	initialize();
+
+	const observer = new MutationObserver(function (mutations) {
+		mutations.forEach(function (mutation) {
+			if (mutation.type === "attributes") {
+				console.log("attribute changed");
+				initialize();
+			}
 		});
+	});
 
-		if (webcomponentElement) {
-			observer.observe(webcomponentElement, {
-				attributes: true,
-			});
-		}
-	}, 1000);
+	if (webcomponentElement) {
+		observer.observe(webcomponentElement, {
+			attributes: true,
+		});
+	}
 </script>
 
 <div id="webln-v4v" part="webln-v4v">
@@ -470,10 +467,7 @@
 			<button class="primary" id="show-terms" on:click={showTerms} type="button"> Show Menu </button>
 		</div>
 	{/if}
-	{#if isInitialLoad && !lnpayTermsRejected}
-		<div class="loader" />
-	{/if}
-	{#if !isInitialLoad && lnpayInitialized && !lnpayTermsRejected}
+	{#if !lnpayTermsRejected}
 		{#if errorMessage}
 			{`ERROR: ${errorMessage}`}
 		{/if}

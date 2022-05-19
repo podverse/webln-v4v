@@ -201,7 +201,6 @@
 	};
 
 	const acceptTermsAndContinue = async () => {
-		await enableWebLN();
 		lnpayTermsAccepted = true;
 
 		dispatchEvent(

@@ -161,8 +161,6 @@
 
 	const initialize = async () => {
 		initializeVariables();
-		// check if the user has webln and keysend (currently Alby)
-		// lnpayInitialized = !(typeof window.webln === "undefined" || !window.webln.keysend);
 
 		if (v4vString) {
 			try {
@@ -172,12 +170,6 @@
 				errorMessage = "Invalid v4v data.";
 			}
 		}
-
-		setTimeout(() => {
-			if (lnpayTermsAccepted) {
-				enableWebLN();
-			}
-		}, 1500);
 
 		const observer = new MutationObserver(function (mutations) {
 			mutations.forEach(function (mutation) {
@@ -394,6 +386,16 @@
 	};
 
 	const sendBoost = async () => {
+		// check if the user has webln and keysend (currently Alby)
+		const lnpayInitialized = !(typeof window.webln === "undefined" || !window.webln.keysend);
+
+		if (!lnpayInitialized) {
+			alert("You need a WebLN-compatible browser extension (like Alby) to send boosts.");
+			return;
+		}
+
+		await enableWebLN();
+
 		boostIsSending = true;
 
 		for (const boostPromise of boostPromises) {

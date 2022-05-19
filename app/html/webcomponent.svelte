@@ -82,8 +82,6 @@
 	let boostPromises: any[] = [];
 	let normalizedRecipients: ValueRecipientNormalized[] = [];
 
-	let lnpayInitialized = false;
-
 	let isInitialLoad = true;
 
 	const getRecipientLabel = (recipient_label?: string | null) => {
@@ -164,9 +162,9 @@
 	const initialize = async () => {
 		initializeVariables();
 		// check if the user has webln and keysend (currently Alby)
-		lnpayInitialized = !(typeof window.webln === "undefined" || !window.webln.keysend);
+		// lnpayInitialized = !(typeof window.webln === "undefined" || !window.webln.keysend);
 
-		if (lnpayInitialized && v4vString) {
+		if (v4vString) {
 			try {
 				const valueTag: ValueTag = JSON.parse(v4vString);
 				prepareBoostPromises(valueTag);
@@ -184,13 +182,10 @@
 		const observer = new MutationObserver(function (mutations) {
 			mutations.forEach(function (mutation) {
 				if (mutation.type === "attributes") {
-					console.log("attribute changed");
 					initialize();
 				}
 			});
 		});
-
-		console.log("webcomponentElement", webcomponentElement);
 
 		if (webcomponentElement) {
 			observer.observe(webcomponentElement, {

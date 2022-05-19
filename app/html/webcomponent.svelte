@@ -84,6 +84,8 @@
 
 	let lnpayInitialized = false;
 
+	let isInitialLoad = true;
+
 	const getRecipientLabel = (recipient_label?: string | null) => {
 		let recipientLabel = "Content Creator";
 		if (recipient_label) {
@@ -195,6 +197,8 @@
 				attributes: true,
 			});
 		}
+
+		isInitialLoad = false;
 	};
 
 	const enableWebLN = async () => {
@@ -462,169 +466,173 @@
 </script>
 
 <div id="webln-v4v" part="webln-v4v">
-	{#if lnpayTermsRejected}
-		<div class="buttons-wrapper align-left">
-			<button class="primary" id="show-terms" on:click={showTerms} type="button"> Show Menu </button>
-		</div>
-	{/if}
-	{#if !lnpayTermsRejected}
-		{#if errorMessage}
-			{`ERROR: ${errorMessage}`}
-		{/if}
-		{#if !lnpayTermsAccepted && !errorMessage}
-			<p>
-				This widget connects to your WebLN compatible browser extension to allow you to send Bitcoin over the
-				Lightning Network to content creators.
-			</p>
-			<p>
-				This is an experimental feature, we are not responsible for lost, misdirected, or stolen funds, and you
-				assume all responsibility for the risks associated with using this feature.
-			</p>
-			<div class="checkbox-wrapper">
-				<input
-					bind:checked={termsAcceptCheckboxValue}
-					id="accept-checkbox"
-					name="accept-checkbox"
-					type="checkbox"
-				/>
-				<label for="accept-checkbox">I understand the risks and accept.</label>
-			</div>
-			<div class="buttons-wrapper">
-				<button class="secondary" on:click={rejectTerms} type="button">Cancel</button>
-				<button
-					class="primary"
-					disabled={!termsAcceptCheckboxValue}
-					on:click={acceptTermsAndContinue}
-					type="button">I Accept</button
-				>
-			</div>
-			<div class="links-wrapper">
-				<a href="https://github.com/podverse/webln-v4v" target="_blank">Source Code</a>
+	{#if !isInitialLoad}
+		{#if lnpayTermsRejected}
+			<div class="buttons-wrapper align-left">
+				<button class="primary" id="show-terms" on:click={showTerms} type="button"> Show Menu </button>
 			</div>
 		{/if}
-		{#if lnpayTermsAccepted && !errorMessage}
-			<form on:submit|preventDefault={sendBoost}>
-				<p>{headerText}</p>
-				<div class="input-wrapper">
-					<label for="content-creator-amount">{recipientLabel}</label>
-					<span>
-						<input
-							id="content-creator-amount"
-							max={amountMax}
-							min={amountMin}
-							on:input={(event) => handleRecipientAmountOnChange(event.target.value)}
-							type="number"
-							value={recipientValue}
-						/>
-						<span class="input-denomination"> satoshis</span>
-					</span>
+		{#if !lnpayTermsRejected}
+			{#if errorMessage}
+				{`ERROR: ${errorMessage}`}
+			{/if}
+			{#if !lnpayTermsAccepted && !errorMessage}
+				<p>
+					This widget connects to your WebLN compatible browser extension to allow you to send Bitcoin over
+					the Lightning Network to content creators.
+				</p>
+				<p>
+					This is an experimental feature, we are not responsible for lost, misdirected, or stolen funds, and
+					you assume all responsibility for the risks associated with using this feature.
+				</p>
+				<div class="checkbox-wrapper">
+					<input
+						bind:checked={termsAcceptCheckboxValue}
+						id="accept-checkbox"
+						name="accept-checkbox"
+						type="checkbox"
+					/>
+					<label for="accept-checkbox">I understand the risks and accept.</label>
 				</div>
-				{#if appRecipientLNAddress}
+				<div class="buttons-wrapper">
+					<button class="secondary" on:click={rejectTerms} type="button">Cancel</button>
+					<button
+						class="primary"
+						disabled={!termsAcceptCheckboxValue}
+						on:click={acceptTermsAndContinue}
+						type="button">I Accept</button
+					>
+				</div>
+				<div class="links-wrapper">
+					<a href="https://github.com/podverse/webln-v4v" target="_blank">Source Code</a>
+				</div>
+			{/if}
+			{#if lnpayTermsAccepted && !errorMessage}
+				<form on:submit|preventDefault={sendBoost}>
+					<p>{headerText}</p>
 					<div class="input-wrapper">
-						<label for="app-amount">{appRecipientLabel}</label>
+						<label for="content-creator-amount">{recipientLabel}</label>
 						<span>
 							<input
-								id="app-amount"
+								id="content-creator-amount"
 								max={amountMax}
 								min={amountMin}
-								on:input={(event) => handleAppRecipientAmountOnChange(event.target.value)}
+								on:input={(event) => handleRecipientAmountOnChange(event.target.value)}
 								type="number"
-								value={appRecipientValue}
+								value={recipientValue}
 							/>
 							<span class="input-denomination"> satoshis</span>
 						</span>
 					</div>
-				{/if}
-				<div class="input-wrapper">
-					<label for="sender-name">{senderNameLabel}</label>
-					<span>
-						<input
-							id="sender-name"
-							on:input={(event) => handleSenderNameOnChange(event.target.value)}
-							placeholder="optional"
-							type="text"
-							value={senderName}
-						/>
-					</span>
-				</div>
-				<div class="input-wrapper">
-					<label for="boostagram">{messageLabel}</label>
-					<textarea
-						id="boostagram"
-						on:blur={(event) => handleMessageOnBlur(event.target.value)}
-						placeholder={messagePlaceholder}
-						rows="4"
-						bind:value={message}
-					/>
-				</div>
-				<div class="buttons-wrapper">
-					<button class="primary" disabled={boostIsSending} type="submit">
-						{#if !boostIsSending}
-							<span>{boostWasSent ? sendButtonSentLabel : sendButtonLabel}</span>
-						{/if}
-						{#if boostIsSending}
-							<div class="loader" />
-						{/if}
-					</button>
-				</div>
-				<div class="more-info-wrapper">
-					<button class="show-more" on:click={toggleShowMoreInfo} type="button">
-						{#if !showMoreInfo}
-							<span>▸</span>
-						{/if}
-						{#if showMoreInfo}
-							<span>▾</span>
-						{/if}
-						Show More Info
-					</button>
-					{#if showMoreInfo}
-						<table class="splits-table">
-							<tr>
-								<th>Name / Address</th>
-								<th class="no-wrap">%</th>
-								<th class="no-wrap">Total</th>
-							</tr>
-							{#each normalizedRecipients as recipient}
-								<tr>
-									<td
-										>{recipient.name}
-										<div class="address">{recipient.address}</div>
-										{#if recipient.customKey}
-											<div class="custom-key">Key: {recipient.customKey}</div>
-										{/if}
-										{#if recipient.customValue}
-											<div class="custom-value">Value: {recipient.customValue}</div>
-										{/if}
-									</td>
-									<td class="center no-wrap">{recipient.normalizedSplit}</td>
-									<td class="center no-wrap">{recipient.amount}{recipient.amount < 10 ? "*" : ""}</td>
-								</tr>
-							{/each}
-							{#if appRecipientLNAddress && appRecipientValue > 0}
-								<tr>
-									<td
-										>{appName}
-										<div class="address">{appRecipientLNAddress}</div>
-										{#if appRecipientCustomKey}
-											<div class="custom-key">Key: {appRecipientCustomKey}</div>
-										{/if}
-										{#if appRecipientCustomValue}
-											<div class="custom-value">Value: {appRecipientCustomValue}</div>
-										{/if}
-									</td>
-									<td class="center" />
-									<td class="center no-wrap"
-										>{appRecipientValue}{appRecipientValue < 10 ? "*" : ""}</td
-									>
-								</tr>
-							{/if}
-						</table>
-						<div class="helper-text">
-							* If a total is less than 10 sats, the transaction will not be sent.
+					{#if appRecipientLNAddress}
+						<div class="input-wrapper">
+							<label for="app-amount">{appRecipientLabel}</label>
+							<span>
+								<input
+									id="app-amount"
+									max={amountMax}
+									min={amountMin}
+									on:input={(event) => handleAppRecipientAmountOnChange(event.target.value)}
+									type="number"
+									value={appRecipientValue}
+								/>
+								<span class="input-denomination"> satoshis</span>
+							</span>
 						</div>
 					{/if}
-				</div>
-			</form>
+					<div class="input-wrapper">
+						<label for="sender-name">{senderNameLabel}</label>
+						<span>
+							<input
+								id="sender-name"
+								on:input={(event) => handleSenderNameOnChange(event.target.value)}
+								placeholder="optional"
+								type="text"
+								value={senderName}
+							/>
+						</span>
+					</div>
+					<div class="input-wrapper">
+						<label for="boostagram">{messageLabel}</label>
+						<textarea
+							id="boostagram"
+							on:blur={(event) => handleMessageOnBlur(event.target.value)}
+							placeholder={messagePlaceholder}
+							rows="4"
+							bind:value={message}
+						/>
+					</div>
+					<div class="buttons-wrapper">
+						<button class="primary" disabled={boostIsSending} type="submit">
+							{#if !boostIsSending}
+								<span>{boostWasSent ? sendButtonSentLabel : sendButtonLabel}</span>
+							{/if}
+							{#if boostIsSending}
+								<div class="loader" />
+							{/if}
+						</button>
+					</div>
+					<div class="more-info-wrapper">
+						<button class="show-more" on:click={toggleShowMoreInfo} type="button">
+							{#if !showMoreInfo}
+								<span>▸</span>
+							{/if}
+							{#if showMoreInfo}
+								<span>▾</span>
+							{/if}
+							Show More Info
+						</button>
+						{#if showMoreInfo}
+							<table class="splits-table">
+								<tr>
+									<th>Name / Address</th>
+									<th class="no-wrap">%</th>
+									<th class="no-wrap">Total</th>
+								</tr>
+								{#each normalizedRecipients as recipient}
+									<tr>
+										<td
+											>{recipient.name}
+											<div class="address">{recipient.address}</div>
+											{#if recipient.customKey}
+												<div class="custom-key">Key: {recipient.customKey}</div>
+											{/if}
+											{#if recipient.customValue}
+												<div class="custom-value">Value: {recipient.customValue}</div>
+											{/if}
+										</td>
+										<td class="center no-wrap">{recipient.normalizedSplit}</td>
+										<td class="center no-wrap"
+											>{recipient.amount}{recipient.amount < 10 ? "*" : ""}</td
+										>
+									</tr>
+								{/each}
+								{#if appRecipientLNAddress && appRecipientValue > 0}
+									<tr>
+										<td
+											>{appName}
+											<div class="address">{appRecipientLNAddress}</div>
+											{#if appRecipientCustomKey}
+												<div class="custom-key">Key: {appRecipientCustomKey}</div>
+											{/if}
+											{#if appRecipientCustomValue}
+												<div class="custom-value">Value: {appRecipientCustomValue}</div>
+											{/if}
+										</td>
+										<td class="center" />
+										<td class="center no-wrap"
+											>{appRecipientValue}{appRecipientValue < 10 ? "*" : ""}</td
+										>
+									</tr>
+								{/if}
+							</table>
+							<div class="helper-text">
+								* If a total is less than 10 sats, the transaction will not be sent.
+							</div>
+						{/if}
+					</div>
+				</form>
+			{/if}
 		{/if}
 	{/if}
 </div>

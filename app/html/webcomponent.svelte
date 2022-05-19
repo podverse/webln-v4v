@@ -333,7 +333,7 @@
 
 		if (contentType === "podcast") {
 			if (podcastPodcastIndexId) {
-				keysend.customRecords["7629175"] = podcastPodcastIndexId;
+				keysend.customRecords["7629175"] = podcastPodcastIndexId.toString();
 			}
 		}
 

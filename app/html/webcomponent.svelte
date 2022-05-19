@@ -188,6 +188,8 @@
 			});
 		});
 
+		console.log("webcomponentElement", webcomponentElement);
+
 		if (webcomponentElement) {
 			observer.observe(webcomponentElement, {
 				attributes: true,
@@ -454,12 +456,9 @@
 		);
 	};
 
-	/*
-        TODO: Instead of a setTimeout, we should listen for a "webln is loaded" event.
-        I don't think one exists at the moment.
-    */
-
-	initialize();
+	setTimeout(() => {
+		initialize();
+	}, 0);
 </script>
 
 <div id="webln-v4v" part="webln-v4v">

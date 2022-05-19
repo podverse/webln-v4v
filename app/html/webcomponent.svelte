@@ -43,32 +43,7 @@
 		type: string;
 	};
 
-	const webcomponentElement = document.querySelector("webln-v4v");
-
-	const amount_max = webcomponentElement?.getAttribute("amount_max");
-	const amount_min = webcomponentElement?.getAttribute("amount_min");
-	const app_name = webcomponentElement?.getAttribute("app_name");
-	const app_recipient_custom_key = webcomponentElement?.getAttribute("app_recipient_custom_key");
-	const app_recipient_custom_value = webcomponentElement?.getAttribute("app_recipient_custom_value");
-	const app_recipient_ln_address = webcomponentElement?.getAttribute("app_recipient_ln_address");
-	const app_recipient_label = webcomponentElement?.getAttribute("app_recipient_label");
-	const app_recipient_value_default = webcomponentElement?.getAttribute("app_recipient_value_default");
-	const content_type = webcomponentElement?.getAttribute("content_type");
-	const has_accepted_terms = webcomponentElement?.getAttribute("has_accepted_terms");
-	const has_rejected_terms = webcomponentElement?.getAttribute("has_rejected_terms");
-	const header_text = webcomponentElement?.getAttribute("header_text");
-	const message_label = webcomponentElement?.getAttribute("message_label");
-	const message_placeholder = webcomponentElement?.getAttribute("message_placeholder");
-	const podcast_episode_title = webcomponentElement?.getAttribute("podcast_episode_title");
-	const podcast_podcast_index_id = webcomponentElement?.getAttribute("podcast_podcast_index_id");
-	const podcast_title = webcomponentElement?.getAttribute("podcast_title");
-	const recipient_label = webcomponentElement?.getAttribute("recipient_label");
-	const recipient_value_default = webcomponentElement?.getAttribute("recipient_value_default");
-	const send_button_label = webcomponentElement?.getAttribute("send_button_label");
-	const send_button_sent_label = webcomponentElement?.getAttribute("send_button_sent_label");
-	const sender_name = webcomponentElement?.getAttribute("sender_name");
-	const sender_name_label = webcomponentElement?.getAttribute("sender_name_label");
-	const v4v_tag = webcomponentElement?.getAttribute("v4v_tag");
+	let webcomponentElement: HTMLElement | null;
 
 	let amountMin: number | null;
 	let amountMax: number | null;
@@ -93,6 +68,7 @@
 	let sendButtonSentLabel: string | null;
 	let senderName: string | null;
 	let senderNameLabel: string | null;
+	let v4vString: any;
 
 	let boostIsSending: boolean;
 	let boostWasSent: boolean;
@@ -109,7 +85,7 @@
 	let isInitialLoad = true;
 	let lnpayInitialized = false;
 
-	const getRecipientLabel = () => {
+	const getRecipientLabel = (recipient_label?: string | null) => {
 		let recipientLabel = "Content Creator";
 		if (recipient_label) {
 			recipientLabel = recipient_label;
@@ -120,6 +96,33 @@
 	};
 
 	const initializeVariables = () => {
+		webcomponentElement = document.querySelector("webln-v4v");
+
+		const amount_max = webcomponentElement?.getAttribute("amount_max");
+		const amount_min = webcomponentElement?.getAttribute("amount_min");
+		const app_name = webcomponentElement?.getAttribute("app_name");
+		const app_recipient_custom_key = webcomponentElement?.getAttribute("app_recipient_custom_key");
+		const app_recipient_custom_value = webcomponentElement?.getAttribute("app_recipient_custom_value");
+		const app_recipient_ln_address = webcomponentElement?.getAttribute("app_recipient_ln_address");
+		const app_recipient_label = webcomponentElement?.getAttribute("app_recipient_label");
+		const app_recipient_value_default = webcomponentElement?.getAttribute("app_recipient_value_default");
+		const content_type = webcomponentElement?.getAttribute("content_type");
+		const has_accepted_terms = webcomponentElement?.getAttribute("has_accepted_terms");
+		const has_rejected_terms = webcomponentElement?.getAttribute("has_rejected_terms");
+		const header_text = webcomponentElement?.getAttribute("header_text");
+		const message_label = webcomponentElement?.getAttribute("message_label");
+		const message_placeholder = webcomponentElement?.getAttribute("message_placeholder");
+		const podcast_episode_title = webcomponentElement?.getAttribute("podcast_episode_title");
+		const podcast_podcast_index_id = webcomponentElement?.getAttribute("podcast_podcast_index_id");
+		const podcast_title = webcomponentElement?.getAttribute("podcast_title");
+		const recipient_label = webcomponentElement?.getAttribute("recipient_label");
+		const recipient_value_default = webcomponentElement?.getAttribute("recipient_value_default");
+		const send_button_label = webcomponentElement?.getAttribute("send_button_label");
+		const send_button_sent_label = webcomponentElement?.getAttribute("send_button_sent_label");
+		const sender_name = webcomponentElement?.getAttribute("sender_name");
+		const sender_name_label = webcomponentElement?.getAttribute("sender_name_label");
+		const v4v_tag = webcomponentElement?.getAttribute("v4v_tag");
+
 		amountMin = parseInt(amount_min, 10) || 0;
 		amountMax = parseInt(amount_max, 10) || 500000;
 		appName = app_name || "Unknown App";
@@ -137,12 +140,13 @@
 		podcastEpisodeTitle = podcast_episode_title || "Untitled Episode";
 		podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
 		podcastTitle = podcast_title || "Untitled Podcast";
-		recipientLabel = getRecipientLabel();
+		recipientLabel = getRecipientLabel(recipient_label);
 		recipientValue = parseInt(recipient_value_default, 10) || 0;
 		sendButtonLabel = send_button_label || "Send Boost";
 		sendButtonSentLabel = send_button_sent_label || "Boost Sent!";
 		senderName = sender_name || "";
 		senderNameLabel = sender_name_label || "Your Name";
+		v4vString = v4v_tag;
 
 		boostIsSending = false;
 		boostWasSent = false;
@@ -167,9 +171,9 @@
 			await enableWebLN();
 		}
 
-		if (lnpayInitialized && v4v_tag) {
+		if (lnpayInitialized && v4vString) {
 			try {
-				const valueTag: ValueTag = JSON.parse(v4v_tag);
+				const valueTag: ValueTag = JSON.parse(v4vString);
 				prepareBoostPromises(valueTag);
 			} catch (error) {
 				errorMessage = "Invalid v4v data.";
@@ -342,7 +346,7 @@
 				}
 
 				if (appRecipientLNAddress && appRecipientValue >= 10) {
-					const boost = generateBoost(appRecipientValue, app_name);
+					const boost = generateBoost(appRecipientValue, appName);
 					const keysendBody = generateKeysendBody(
 						appRecipientLNAddress,
 						appRecipientValue,
@@ -395,28 +399,28 @@
 
 	/* These will regenerate the boost promises whenever an amount input value changes */
 	const handleRecipientAmountOnChange = (val: number) => {
-		const valueTag: ValueTag = JSON.parse(v4v_tag);
+		const valueTag: ValueTag = JSON.parse(v4vString);
 		recipientValue = val;
 		prepareBoostPromises(valueTag);
 		dispatchNewDefaultFormValues();
 	};
 
 	const handleAppRecipientAmountOnChange = (val: number) => {
-		const valueTag: ValueTag = JSON.parse(v4v_tag);
+		const valueTag: ValueTag = JSON.parse(v4vString);
 		appRecipientValue = val;
 		prepareBoostPromises(valueTag);
 		dispatchNewDefaultFormValues();
 	};
 
 	const handleSenderNameOnChange = (val: string) => {
-		const valueTag: ValueTag = JSON.parse(v4v_tag);
+		const valueTag: ValueTag = JSON.parse(v4vString);
 		senderName = val;
 		prepareBoostPromises(valueTag);
 		dispatchNewDefaultFormValues();
 	};
 
 	const handleMessageOnBlur = (val: string) => {
-		const valueTag: ValueTag = JSON.parse(v4v_tag);
+		const valueTag: ValueTag = JSON.parse(v4vString);
 		message = val;
 		prepareBoostPromises(valueTag);
 	};
@@ -436,26 +440,27 @@
 		);
 	};
 
-	const observer = new MutationObserver(function (mutations) {
-		mutations.forEach(function (mutation) {
-			if (mutation.type === "attributes") {
-				initialize();
-			}
-		});
-	});
-
-	if (webcomponentElement) {
-		observer.observe(webcomponentElement, {
-			attributes: true,
-		});
-	}
-
 	/*
         TODO: Instead of a setTimeout, we should listen for a "webln is loaded" event.
         I don't think one exists at the moment.
     */
 	setTimeout(async () => {
 		initialize();
+
+		const observer = new MutationObserver(function (mutations) {
+			mutations.forEach(function (mutation) {
+				if (mutation.type === "attributes") {
+					console.log("attribute changed");
+					initialize();
+				}
+			});
+		});
+
+		if (webcomponentElement) {
+			observer.observe(webcomponentElement, {
+				attributes: true,
+			});
+		}
 	}, 1000);
 </script>
 

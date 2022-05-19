@@ -135,7 +135,7 @@
 		headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
 		messageLabel = message_label || "Boostagram";
 		messagePlaceholder = message_placeholder || "optional public message";
-		podcastEpisodeTitle = podcast_episode_title || "Untitled Episode";
+		podcastEpisodeTitle = podcast_episode_title || "";
 		podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
 		podcastTitle = podcast_title || "Untitled Podcast";
 		recipientLabel = getRecipientLabel(recipient_label);
@@ -289,7 +289,7 @@
 			boost = {
 				...boost,
 				podcast: podcastTitle,
-				episode: podcastEpisodeTitle,
+				...(podcastEpisodeTitle ? { episode: podcastEpisodeTitle } : {}),
 			};
 		}
 

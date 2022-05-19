@@ -70,44 +70,44 @@
 	const sender_name_label = element?.getAttribute("sender_name_label");
 	const v4v_tag = element?.getAttribute("v4v_tag");
 
-	let amountMin = amount_min || 0;
-	let amountMax = amount_max || 500000;
-	let appName = app_name || "Unknown App";
-	let appRecipientCustomKey = app_recipient_custom_key || "";
-	let appRecipientCustomValue = app_recipient_custom_value || "";
-	let appRecipientLNAddress = app_recipient_ln_address || "";
-	let appRecipientLabel = app_recipient_label || "App";
-	let appRecipientValue = parseInt(app_recipient_value_default, 10) || 0;
-	let contentType = content_type || "";
-	let hasAcceptedTerms = document.querySelector("webln-v4v").getAttribute("has_accepted_terms") === "true";
-	console.log("asdfadsf", document.querySelector("webln-v4v").getAttributeNames());
-	console.log("has accepted", has_accepted_terms, hasAcceptedTerms);
-	let hasRejectedTerms = has_rejected_terms === "true";
-	let headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
-	let messageLabel = message_label || "Boostagram";
-	let messagePlaceholder = message_placeholder || "optional public message";
-	let podcastEpisodeTitle = podcast_episode_title || "Untitled Episode";
-	let podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
-	let podcastTitle = podcast_title || "Untitled Podcast";
-	let recipientValue = parseInt(recipient_value_default, 10) || 0;
-	let sendButtonLabel = send_button_label || "Send Boost";
-	let sendButtonSentLabel = send_button_sent_label || "Boost Sent!";
-	let senderName = sender_name || "";
-	let senderNameLabel = sender_name_label || "Your Name";
+	let amountMin: number | null;
+	let amountMax: number | null;
+	let appName: string | null;
+	let appRecipientCustomKey: string | null;
+	let appRecipientCustomValue: string | null;
+	let appRecipientLNAddress: string | null;
+	let appRecipientLabel: string | null;
+	let appRecipientValue: number | null;
+	let contentType: string | null;
+	let hasAcceptedTerms: boolean | null;
+	let hasRejectedTerms: boolean | null;
+	let headerText: string | null;
+	let messageLabel: string | null;
+	let messagePlaceholder: string | null;
+	let podcastEpisodeTitle: string | null;
+	let podcastPodcastIndexId: number | null;
+	let podcastTitle: string | null;
+	let recipientLabel: string | null;
+	let recipientValue: number | null;
+	let sendButtonLabel: string | null;
+	let sendButtonSentLabel: string | null;
+	let senderName: string | null;
+	let senderNameLabel: string | null;
 
-	let boostIsSending = false;
-	let boostWasSent = false;
-	let errorMessage = "";
-	let isInitialLoad = true;
-	let lnpayInitialized = false;
-	let lnpayTermsAccepted = hasAcceptedTerms;
-	let lnpayTermsRejected = hasRejectedTerms;
-	let message = "";
-	let showMoreInfo = false;
-	let termsAcceptCheckboxValue = false;
+	let boostIsSending: boolean;
+	let boostWasSent: boolean;
+	let errorMessage: string;
+	let lnpayInitialized: boolean;
+	let lnpayTermsAccepted: boolean;
+	let lnpayTermsRejected: boolean;
+	let message: string;
+	let showMoreInfo: boolean;
+	let termsAcceptCheckboxValue: boolean;
 
 	let boostPromises: any[] = [];
 	let normalizedRecipients: ValueRecipientNormalized[] = [];
+
+	let isInitialLoad = true;
 
 	const getRecipientLabel = () => {
 		let recipientLabel = "Content Creator";
@@ -119,10 +119,48 @@
 		return recipientLabel;
 	};
 
-	let recipientLabel = getRecipientLabel();
+	const initializeVariables = () => {
+		amountMin = parseInt(amount_min, 10) || 0;
+		amountMax = parseInt(amount_max, 10) || 500000;
+		appName = app_name || "Unknown App";
+		appRecipientCustomKey = app_recipient_custom_key || "";
+		appRecipientCustomValue = app_recipient_custom_value || "";
+		appRecipientLNAddress = app_recipient_ln_address || "";
+		appRecipientLabel = app_recipient_label || "App";
+		appRecipientValue = parseInt(app_recipient_value_default, 10) || 0;
+		contentType = content_type || "";
+		hasAcceptedTerms = has_accepted_terms === "true";
+		hasRejectedTerms = has_rejected_terms === "true";
+		headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
+		messageLabel = message_label || "Boostagram";
+		messagePlaceholder = message_placeholder || "optional public message";
+		podcastEpisodeTitle = podcast_episode_title || "Untitled Episode";
+		podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
+		podcastTitle = podcast_title || "Untitled Podcast";
+		recipientLabel = getRecipientLabel();
+		recipientValue = parseInt(recipient_value_default, 10) || 0;
+		sendButtonLabel = send_button_label || "Send Boost";
+		sendButtonSentLabel = send_button_sent_label || "Boost Sent!";
+		senderName = sender_name || "";
+		senderNameLabel = sender_name_label || "Your Name";
+
+		boostIsSending = false;
+		boostWasSent = false;
+		errorMessage = "";
+		lnpayInitialized = false;
+		lnpayTermsAccepted = hasAcceptedTerms;
+		lnpayTermsRejected = hasRejectedTerms;
+		message = "";
+		showMoreInfo = false;
+		termsAcceptCheckboxValue = false;
+
+		boostPromises = [];
+		normalizedRecipients = [];
+	};
 
 	const initialize = () => {
 		isInitialLoad = false;
+		initializeVariables();
 		// check if the user has webln and keysend (currently Alby)
 		return !(typeof window.webln === "undefined" || !window.webln.keysend);
 	};
@@ -405,7 +443,7 @@
 				errorMessage = "Invalid v4v data.";
 			}
 		}
-	}, 1500);
+	}, 1000);
 </script>
 
 <div id="webln-v4v" part="webln-v4v">

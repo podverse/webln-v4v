@@ -79,6 +79,12 @@ The webcomponent fires some events that your webpage can listen for to remember 
 | WebLN-V4V-Terms-Rejected     | This fires when the user presses the "Cancel" button. You can use this to set a cookie that remembers the user has already rejected the terms, then pass in "true" to the `has_rejected_terms` attribute to hide the "Accept Terms" screen on subsequent visits.       |
 | WebLN-V4V-New-Default-Values | This fires whenever the user changes the "Content Creator" value, "App" value, or "Your Name" value. The new values will be available in the `detail` property on the event.                                                                                           |
 
-## Questions?
+## Advanced Example
 
-Visit the [Podverse Contact](https://podverse.fm/contact) page for ways you can reach us with questions. Thank you!
+For a more advanced example of a webln-v4v implementation, check out the WebLNV4VForm in the [podverse-web repo](https://github.com/podverse/podverse-web/blob/develop/src/components/WebLNV4VForm/WebLNV4VForm.tsx).
+
+## Questions? Contributions?
+
+If you'd like report a bug or make a code contribution, please create a Github issue in this repo and/or a Pull Request.
+
+For other questions, please visit the [Podverse Contact](https://podverse.fm/contact) page for ways you can reach us. Thank you!

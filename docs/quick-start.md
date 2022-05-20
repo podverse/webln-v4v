@@ -33,7 +33,7 @@ A more detailed example can be [found here](https://github.com/podverse/webln-v4
 
 To learn more about `<podcast:value>` for the `v4v_tag` attribute, visit the [documentation for the spec](https://github.com/Podcastindex-org/podcast-namespace/blob/main/value/value.md).
 
-## Customize the webcomponent attributes
+## Customize the webcomponent attributes (mostly optional)
 
 You can customize various aspects of the webcomponent by setting the following attributes in the `<webln-v4v ... />` element:
 

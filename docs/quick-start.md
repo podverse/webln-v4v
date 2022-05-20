@@ -31,7 +31,7 @@ Add the webln-v4v webcomponent wherever you want it to load on your page. Below 
 
 A more detailed example can be [found here](https://github.com/podverse/webln-v4v/blob/main/public/index.html#L16-L28).
 
-To learn more about `<podcast:value>` for the `v4v_tag` attribute, visit the [documentation for the spec](https://github.com/Podcastindex-org/podcast-namespace/blob/main/value/value.md).
+The `v4v_tag` attribute is based on the `<podcast:value>` namespace by Podcasting 2.0. To learn more about `<podcast:value>`, visit the [the spec documentation](https://github.com/Podcastindex-org/podcast-namespace/blob/main/value/value.md).
 
 ## Customize the webcomponent attributes (mostly optional)
 

@@ -65,7 +65,7 @@ You can customize various aspects of the webcomponent by setting the following a
 
 ## Customize the webcomponent styles (optional)
 
-You can override some of the styles of the webln-v4v form by setting the following CSS variables.
+You can override some of the styles of the webln-v4v form by setting CSS variables.
 
 A full list of the customizable CSS variables can be [found here](https://github.com/podverse/webln-v4v/blob/main/app/styles/sample-variable-overrides.scss). The sample is designed to match the look and feel of the [Podverse website](https://podverse.fm).
 

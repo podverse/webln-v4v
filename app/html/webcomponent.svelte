@@ -57,6 +57,7 @@
 	let hasAcceptedTerms: boolean | null;
 	let hasRejectedTerms: boolean | null;
 	let headerText: string | null;
+	let messageCharCountMax: number | null;
 	let messageLabel: string | null;
 	let messagePlaceholder: string | null;
 	let podcastEpisodeTitle: string | null;
@@ -70,12 +71,15 @@
 	let senderNameLabel: string | null;
 	let v4vString: any;
 
+	let boostDisabled: boolean;
 	let boostIsSending: boolean;
 	let boostWasSent: boolean;
 	let errorMessage: string;
 	let lnpayTermsAccepted: boolean;
 	let lnpayTermsRejected: boolean;
 	let message: string;
+	let messageCharCount: number;
+	let messageCharCountExceeded: boolean;
 	let showMoreInfo: boolean;
 	let termsAcceptCheckboxValue: boolean;
 
@@ -108,6 +112,7 @@
 		const has_accepted_terms = webcomponentElement?.getAttribute("has_accepted_terms");
 		const has_rejected_terms = webcomponentElement?.getAttribute("has_rejected_terms");
 		const header_text = webcomponentElement?.getAttribute("header_text");
+		const message_char_count_max = webcomponentElement?.getAttribute("message_char_count_max");
 		const message_label = webcomponentElement?.getAttribute("message_label");
 		const message_placeholder = webcomponentElement?.getAttribute("message_placeholder");
 		const podcast_episode_title = webcomponentElement?.getAttribute("podcast_episode_title");
@@ -133,6 +138,7 @@
 		hasAcceptedTerms = has_accepted_terms === "true";
 		hasRejectedTerms = has_rejected_terms === "true";
 		headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
+		messageCharCountMax = parseInt(message_char_count_max, 10) || 500;
 		messageLabel = message_label || "Boostagram";
 		messagePlaceholder = message_placeholder || "optional public message";
 		podcastEpisodeTitle = podcast_episode_title || "";
@@ -146,12 +152,15 @@
 		senderNameLabel = sender_name_label || "Your Name";
 		v4vString = v4v_tag;
 
+		boostDisabled = false;
 		boostIsSending = false;
 		boostWasSent = false;
 		errorMessage = "";
 		lnpayTermsAccepted = hasAcceptedTerms;
 		lnpayTermsRejected = hasRejectedTerms;
 		message = "";
+		messageCharCount = 0;
+		messageCharCountExceeded = false;
 		showMoreInfo = false;
 		termsAcceptCheckboxValue = false;
 
@@ -445,6 +454,12 @@
 		dispatchNewDefaultFormValues();
 	};
 
+	const handleMessageOnChange = (value: string) => {
+		messageCharCount = value.length;
+		messageCharCountExceeded = messageCharCount > 500;
+		boostDisabled = messageCharCountExceeded;
+	};
+
 	const handleMessageOnBlur = (val: string) => {
 		const valueTag: ValueTag = JSON.parse(v4vString);
 		message = val;
@@ -558,18 +573,26 @@
 							/>
 						</span>
 					</div>
-					<div class="input-wrapper">
+					<div class={`input-wrapper ${messageCharCountExceeded ? "error" : ""}`}>
 						<label for="boostagram">{messageLabel}</label>
 						<textarea
 							id="boostagram"
 							on:blur={(event) => handleMessageOnBlur(event.target.value)}
+							on:input={(event) => handleMessageOnChange(event.target.value)}
 							placeholder={messagePlaceholder}
 							rows="4"
 							bind:value={message}
 						/>
+						<div class="char-count" id="boostagram-char-count">
+							{`${messageCharCount} / ${messageCharCountMax}`}
+							<div aria-live="polite" class="sr-only">
+								{`${messageCharCount} of ${messageCharCountMax}.`}
+								{`${messageCharCount > messageCharCountMax ? "Character limit exceeded." : ""}`}
+							</div>
+						</div>
 					</div>
 					<div class="buttons-wrapper">
-						<button class="primary" disabled={boostIsSending} type="submit">
+						<button class="primary" disabled={boostIsSending || boostDisabled} type="submit">
 							{#if !boostIsSending}
 								<span>{boostWasSent ? sendButtonSentLabel : sendButtonLabel}</span>
 							{/if}

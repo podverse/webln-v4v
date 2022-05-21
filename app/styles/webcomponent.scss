@@ -46,6 +46,15 @@
 		}
 	}
 
+  .sr-only {
+    position:absolute;
+    left:-10000px;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+  }
+
 	a {
 		text-decoration: none;
 
@@ -138,6 +147,22 @@
 				color: var(--webln-input-placeholder, gray);
 			}
 		}
+
+    .char-count {
+      font-size: 14px;
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    &.error {
+      textarea {
+        outline: 3px solid var(--webln-error-outline-color, #bd2130);
+      }
+
+      .char-count {
+        color: var(--webln-error-text-color, #bd2130);
+      }
+    }
 	}
 
 	.buttons-wrapper {

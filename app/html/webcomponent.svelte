@@ -186,6 +186,14 @@
 		}
 
 		isInitialLoad = false;
+
+		dispatchEvent(
+			new CustomEvent("WebLN-V4V-Has-Loaded", {
+				bubbles: true,
+				cancelable: false,
+				composed: true,
+			}),
+		);
 	};
 
 	const enableWebLN = async () => {
@@ -303,7 +311,9 @@
 		customKey: string,
 		customValue: string,
 	) => {
-		if (!address || amount < 10) return;
+		if (!address || amount < 10) {
+			return;
+		}
 
 		let keysend: any = {
 			destination: address,

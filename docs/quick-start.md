@@ -8,7 +8,6 @@ The webln-v4v library is intended to make it easy to send Bitcoin Lightning Netw
 
 others???
 
-
 ## Installation
 
 Load the latest webln-v4v script on your webpage from CDN:

@@ -2,7 +2,7 @@
 
 <!-- all-shields/header-badges:START -->
 
-[![v1.0.0-beta.23](https://img.shields.io/badge/version-v1.0.0--beta.23-lightgray.svg?style=flat&logo=)](https://github.com/podverse/webln-v4v/blob/main/CHANGELOG.md) [![](https://img.shields.io/npm/v/webln-v4v?color=CC3534&logo=npm)](https://www.npmjs.com/package/webln-v4v) [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat&logo=license)](https://github.com/podverse/webln-v4v/blob/main/LICENSE.md) [![Powered By Svelte](https://img.shields.io/badge/powered%20by-svelte-FF3C02.svg?style=flat&logo=svelte)](https://svelte.dev/) [![Language: TypeScript](https://img.shields.io/badge/language-typescript-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![ECMAScript: 2019](https://img.shields.io/badge/ES-9-F7DF1E.svg?style=flat&logo=javascript)](https://github.com/tc39/ecma262) [![Discord Server](https://discordapp.com/api/guilds/383373985666301975/embed.png)](https://discord.ptkdev.io)
+[![v1.0.0-beta.24](https://img.shields.io/badge/version-v1.0.0--beta.24-lightgray.svg?style=flat&logo=)](https://github.com/podverse/webln-v4v/blob/main/CHANGELOG.md) [![](https://img.shields.io/npm/v/webln-v4v?color=CC3534&logo=npm)](https://www.npmjs.com/package/webln-v4v) [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat&logo=license)](https://github.com/podverse/webln-v4v/blob/main/LICENSE.md) [![Powered By Svelte](https://img.shields.io/badge/powered%20by-svelte-FF3C02.svg?style=flat&logo=svelte)](https://svelte.dev/) [![Language: TypeScript](https://img.shields.io/badge/language-typescript-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![ECMAScript: 2019](https://img.shields.io/badge/ES-9-F7DF1E.svg?style=flat&logo=javascript)](https://github.com/tc39/ecma262) [![Discord Server](https://discordapp.com/api/guilds/383373985666301975/embed.png)](https://discord.ptkdev.io)
 
 <!-- all-shields/header-badges:END -->
 
@@ -11,6 +11,10 @@ A library for easily rendering a form on-page that lets your webpage visitors se
 ## DISCLAIMER 🚨🚨🚨
 
 This is an experimental library. The software is provided AS-IS, we make no guarantees of its reliability, we are not responsible if your funds go missing or are sent to the wrong address, and you and your users assume all risks associated with using it.
+
+## Quick Start
+
+The best place to start is with the [quick start guide](https://github.com/podverse/webln-v4v/blob/main/docs/quick-start.md). Hopefully it's as easy as copy/pasting a few lines into html.
 
 ## Supported Browser Extensions
 

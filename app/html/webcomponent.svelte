@@ -54,13 +54,14 @@
 	let appRecipientLabel: string | null;
 	let appRecipientValue: number | null;
 	let contentType: string | null;
+	let episodeGUID: string | null;
 	let hasAcceptedTerms: boolean | null;
 	let hasRejectedTerms: boolean | null;
 	let headerText: string | null;
 	let messageCharCountMax: number | null;
 	let messageLabel: string | null;
 	let messagePlaceholder: string | null;
-	let podcastEpisodeTitle: string | null;
+	let episodeTitle: string | null;
 	let podcastPodcastIndexId: number | null;
 	let podcastTitle: string | null;
 	let recipientLabel: string | null;
@@ -109,13 +110,14 @@
 		const app_recipient_label = webcomponentElement?.getAttribute("app_recipient_label");
 		const app_recipient_value_default = webcomponentElement?.getAttribute("app_recipient_value_default");
 		const content_type = webcomponentElement?.getAttribute("content_type");
+		const episode_guid = webcomponentElement?.getAttribute("episode_guid");
+		const episode_title = webcomponentElement?.getAttribute("episode_title");
 		const has_accepted_terms = webcomponentElement?.getAttribute("has_accepted_terms");
 		const has_rejected_terms = webcomponentElement?.getAttribute("has_rejected_terms");
 		const header_text = webcomponentElement?.getAttribute("header_text");
 		const message_char_count_max = webcomponentElement?.getAttribute("message_char_count_max");
 		const message_label = webcomponentElement?.getAttribute("message_label");
 		const message_placeholder = webcomponentElement?.getAttribute("message_placeholder");
-		const podcast_episode_title = webcomponentElement?.getAttribute("podcast_episode_title");
 		const podcast_podcast_index_id = webcomponentElement?.getAttribute("podcast_podcast_index_id");
 		const podcast_title = webcomponentElement?.getAttribute("podcast_title");
 		const recipient_label = webcomponentElement?.getAttribute("recipient_label");
@@ -135,13 +137,14 @@
 		appRecipientLabel = app_recipient_label || "App";
 		appRecipientValue = parseInt(app_recipient_value_default, 10) || 0;
 		contentType = content_type || "";
+		episodeGUID = episode_guid || "";
+		episodeTitle = episode_title || "";
 		hasAcceptedTerms = has_accepted_terms === "true";
 		hasRejectedTerms = has_rejected_terms === "true";
 		headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
 		messageCharCountMax = parseInt(message_char_count_max, 10) || 500;
 		messageLabel = message_label || "Boostagram";
 		messagePlaceholder = message_placeholder || "optional public message";
-		podcastEpisodeTitle = podcast_episode_title || "";
 		podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
 		podcastTitle = podcast_title || "Untitled Podcast";
 		recipientLabel = getRecipientLabel(recipient_label);
@@ -291,7 +294,7 @@
 		return finalNormalizedValueRecipients;
 	};
 
-	const generateBoost = (valueSATTotal: number, name: string) => {
+	const generateBoost7629169 = (valueSATTotal: number, name: string) => {
 		let boost: any = {
 			action: "boost",
 			value_msat_total: valueSATTotal * 1000,
@@ -306,7 +309,9 @@
 			boost = {
 				...boost,
 				podcast: podcastTitle,
-				...(podcastEpisodeTitle ? { episode: podcastEpisodeTitle } : {}),
+				...(episodeTitle ? { episode: episodeTitle } : {}),
+				...(podcastPodcastIndexId ? { feedID: podcastPodcastIndexId.toString() } : {}),
+				...(episodeGUID ? { episode_guid: episodeGUID } : {}),
 			};
 		}
 
@@ -363,7 +368,7 @@
 			) {
 				for (const recipient of normalizedRecipients) {
 					const { address, amount, customKey, customValue, name } = recipient;
-					const boost = generateBoost(amount, name);
+					const boost = generateBoost7629169(amount, name);
 					const keysendBody = generateKeysendBody(address, amount, boost, customKey, customValue);
 					if (keysendBody) {
 						boostPromises.push(() => webln.keysend(keysendBody));
@@ -371,7 +376,7 @@
 				}
 
 				if (appRecipientLNAddress && appRecipientValue >= 10) {
-					const boost = generateBoost(appRecipientValue, appName);
+					const boost = generateBoost7629169(appRecipientValue, appName);
 					const keysendBody = generateKeysendBody(
 						appRecipientLNAddress,
 						appRecipientValue,

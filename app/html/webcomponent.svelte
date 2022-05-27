@@ -368,7 +368,7 @@
 			) {
 				for (const recipient of normalizedRecipients) {
 					const { address, amount, customKey, customValue, name } = recipient;
-					const boost = generateBoost7629169(amount, name);
+					const boost = generateBoost7629169(recipientValue, name);
 					const keysendBody = generateKeysendBody(address, amount, boost, customKey, customValue);
 					if (keysendBody) {
 						boostPromises.push(() => webln.keysend(keysendBody));

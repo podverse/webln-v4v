@@ -43,6 +43,41 @@
 		type: string;
 	};
 
+	type V4VBoostResult = {
+		address: string;
+		amount: number;
+		customKey?: string;
+		customValue?: any;
+		errorMessage?: string;
+		name?: string;
+		normalizedSplit?: number;
+	};
+
+	type V4VBoostResults = {
+		succeededs: V4VBoostResult[];
+		errors: V4VBoostResult[];
+		allFailed: boolean;
+		allSucceeded: boolean;
+		someFailed: boolean;
+		message?: string;
+		totalSent: number;
+		totalFailed: number;
+	};
+
+	type Route = {
+		total_amt: number;
+		total_fees: number;
+	};
+
+	type SendPaymentResponse = {
+		data: {
+			preimage: string;
+			paymentHash: string;
+			route: Route;
+			payment_error?: string;
+		};
+	};
+
 	let webcomponentElement: HTMLElement | null = null;
 
 	let amountMin: number | null;
@@ -354,6 +389,34 @@
 		return keysend;
 	};
 
+	const handleBoost = async (
+		keysendBody: string,
+		address: string,
+		amount: number,
+		normalizedSplit: number,
+		name?: string,
+		customKey?: string,
+		customValue?: any,
+	) => {
+		const boostResult: V4VBoostResult = {
+			address,
+			amount,
+			customKey,
+			customValue,
+			errorMessage: "",
+			name,
+			normalizedSplit,
+		};
+		try {
+			const sendPaymentResponse: SendPaymentResponse = await webln.keysend(keysendBody);
+			boostResult.errorMessage = sendPaymentResponse?.payment_error || "";
+		} catch (error) {
+			boostResult.errorMessage = error?.message || "";
+		}
+
+		return boostResult;
+	};
+
 	const prepareBoostPromises = (valueTag: ValueTag) => {
 		try {
 			boostPromises = [];
@@ -367,15 +430,17 @@
 				valueTag.recipients.length > 0
 			) {
 				for (const recipient of normalizedRecipients) {
-					const { address, amount, customKey, customValue, name } = recipient;
+					const { address, amount, customKey, customValue, name, normalizedSplit } = recipient;
 					const boost = generateBoost7629169(recipientValue, name);
 					const keysendBody = generateKeysendBody(address, amount, boost, customKey, customValue);
 					if (keysendBody) {
-						boostPromises.push(() => webln.keysend(keysendBody));
+						boostPromises.push(() =>
+							handleBoost(keysendBody, address, amount, normalizedSplit, name, customKey, customValue),
+						);
 					}
 				}
 
-				if (appRecipientLNAddress && appRecipientValue >= 10) {
+				if (appRecipientLNAddress && appRecipientValue && appRecipientValue >= 10) {
 					const boost = generateBoost7629169(appRecipientValue, appName);
 					const keysendBody = generateKeysendBody(
 						appRecipientLNAddress,
@@ -386,7 +451,17 @@
 					);
 
 					if (keysendBody) {
-						boostPromises.push(() => webln.keysend(keysendBody));
+						boostPromises.push(() =>
+							handleBoost(
+								keysendBody,
+								appRecipientLNAddress,
+								appRecipientValue,
+								"app",
+								appName,
+								appRecipientCustomKey,
+								appRecipientCustomValue,
+							),
+						);
 					}
 				}
 			} else {
@@ -421,18 +496,38 @@
 
 		boostIsSending = true;
 
-		let atLeastOneBoostSucceeded = false;
+		const succeededs: V4VBoostResult[] = [];
+		const errors: V4VBoostResult[] = [];
+		let totalSent = 0;
+		let totalFailed = 0;
+
+		const boostResults: V4VBoostResults = {
+			succeededs,
+			errors,
+			allFailed: false,
+			allSucceeded: false,
+			someFailed: false,
+			message,
+			totalSent,
+			totalFailed,
+		};
 
 		for (const boostPromise of boostPromises) {
-			try {
-				await boostPromise();
-				atLeastOneBoostSucceeded = true;
-			} catch (error) {
-				console.log("Boost failed:", error);
+			const boostResult = await boostPromise();
+			if (boostResult.errorMessage) {
+				boostResults.errors.push(boostResult);
+			} else {
+				boostResults.succeededs.push(boostResult);
 			}
 		}
 
+		boostResults.allFailed = errors.length > 0 && succeededs.length === 0;
+		boostResults.allSucceeded = errors.length === 0 && succeededs.length > 0;
+		boostResults.someFailed = errors.length > 0 && succeededs.length > 0;
+
 		boostIsSending = false;
+
+		const atLeastOneBoostSucceeded = boostResults.allSucceeded || boostResults.someFailed;
 
 		if (atLeastOneBoostSucceeded) {
 			boostWasSent = true;
@@ -441,6 +536,7 @@
 					bubbles: true,
 					cancelable: false,
 					composed: true,
+					detail: boostResults,
 				}),
 			);
 

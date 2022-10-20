@@ -169,6 +169,9 @@
 
 		boostPromises = [];
 		normalizedRecipients = [];
+
+		console.log("yep");
+		alert("hello world!");
 	};
 
 	const initialize = async () => {
@@ -423,7 +426,8 @@
 
 		for (const boostPromise of boostPromises) {
 			try {
-				await boostPromise();
+				// await boostPromise();
+				console.log("boostPromise", boostPromise);
 			} catch (error) {
 				console.log("Boost failed:", error);
 			}

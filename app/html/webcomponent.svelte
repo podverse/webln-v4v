@@ -169,9 +169,6 @@
 
 		boostPromises = [];
 		normalizedRecipients = [];
-
-		console.log("yep");
-		alert("hello world!");
 	};
 
 	const initialize = async () => {
@@ -424,29 +421,33 @@
 
 		boostIsSending = true;
 
+		let atLeastOneBoostSucceeded = false;
+
 		for (const boostPromise of boostPromises) {
 			try {
-				// await boostPromise();
-				console.log("boostPromise", boostPromise);
+				await boostPromise();
+				atLeastOneBoostSucceeded = true;
 			} catch (error) {
 				console.log("Boost failed:", error);
 			}
 		}
 
 		boostIsSending = false;
-		boostWasSent = true;
 
-		dispatchEvent(
-			new CustomEvent("WebLN-V4V-Boost-Sent", {
-				bubbles: true,
-				cancelable: false,
-				composed: true,
-			}),
-		);
+		if (atLeastOneBoostSucceeded) {
+			boostWasSent = true;
+			dispatchEvent(
+				new CustomEvent("WebLN-V4V-Boost-Sent", {
+					bubbles: true,
+					cancelable: false,
+					composed: true,
+				}),
+			);
 
-		setTimeout(() => {
-			boostWasSent = false;
-		}, 3000);
+			setTimeout(() => {
+				boostWasSent = false;
+			}, 3000);
+		}
 	};
 
 	/* These will regenerate the boost promises whenever an amount input value changes */

@@ -432,6 +432,14 @@
 		boostIsSending = false;
 		boostWasSent = true;
 
+		dispatchEvent(
+			new CustomEvent("WebLN-V4V-Boost-Sent", {
+				bubbles: true,
+				cancelable: false,
+				composed: true,
+			}),
+		);
+
 		setTimeout(() => {
 			boostWasSent = false;
 		}, 3000);

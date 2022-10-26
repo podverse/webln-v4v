@@ -2,7 +2,7 @@
 import svelte from "rollup-plugin-svelte";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
-import livereload from "rollup-plugin-livereload";
+// import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import sveltePreprocess from "svelte-preprocess";
 import typescript from "@rollup/plugin-typescript";
@@ -15,10 +15,7 @@ import { spawn } from "child_process";
 
 const config = require("./app/configs/config");
 const tsconfig = require("./tsconfig.json");
-// TODO: debug mode was accidentally getting set to true during npm publish...
-// I'm not sure why, but I commented it out instead of fixing it.
-// config.debug = config.debug === "enabled" ? true : false;
-config.debug = false;
+config.debug = config.debug === "enabled" ? true : false;
 const production = !config.debug;
 
 function serve() {
@@ -116,7 +113,7 @@ export default {
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		!production && livereload({ watch: "dist", delay: 200 }),
+		// !production && livereload({ watch: "dist", delay: 200 }),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify

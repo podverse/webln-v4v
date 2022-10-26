@@ -15,7 +15,10 @@ import { spawn } from "child_process";
 
 const config = require("./app/configs/config");
 const tsconfig = require("./tsconfig.json");
-config.debug = config.debug === "enabled" ? true : false;
+// TODO: debug mode was accidentally getting set to true during npm publish...
+// I'm not sure why, but I commented it out instead of fixing it.
+// config.debug = config.debug === "enabled" ? true : false;
+config.debug = false;
 const production = !config.debug;
 
 function serve() {

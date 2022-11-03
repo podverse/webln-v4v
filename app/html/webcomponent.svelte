@@ -530,6 +530,7 @@
 		const atLeastOneBoostSucceeded = boostResults.allSucceeded || boostResults.someFailed;
 
 		if (atLeastOneBoostSucceeded) {
+			handleMessageClear();
 			boostWasSent = true;
 			dispatchEvent(
 				new CustomEvent("WebLN-V4V-Boost-Sent", {
@@ -575,9 +576,14 @@
 	};
 
 	const handleMessageOnBlur = (val: string) => {
+		handleMessageOnChange(val);
 		const valueTag: ValueTag = JSON.parse(v4vString);
 		message = val;
 		prepareBoostPromises(valueTag);
+	};
+
+	const handleMessageClear = () => {
+		handleMessageOnBlur("");
 	};
 
 	const dispatchNewDefaultFormValues = () => {

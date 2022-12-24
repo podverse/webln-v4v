@@ -173,7 +173,7 @@
 		appRecipientValue = parseInt(app_recipient_value_default, 10) || 0;
 		contentType = content_type || "";
 		episodeGUID = episode_guid || "";
-		episodeTitle = episode_title || "";
+		episodeTitle = (episode_title || "").substring(0, 60);
 		hasAcceptedTerms = has_accepted_terms === "true";
 		hasRejectedTerms = has_rejected_terms === "true";
 		headerText = header_text || "Send a Bitcoin donation to this content creator and app.";
@@ -181,7 +181,7 @@
 		messageLabel = message_label || "Boostagram";
 		messagePlaceholder = message_placeholder || "optional public message";
 		podcastPodcastIndexId = parseInt(podcast_podcast_index_id, 10) || null;
-		podcastTitle = podcast_title || "Untitled Podcast";
+		podcastTitle = (podcast_title || "Untitled Podcast").substring(0, 60);
 		recipientLabel = getRecipientLabel(recipient_label);
 		recipientValue = parseInt(recipient_value_default, 10) || 0;
 		sendButtonLabel = send_button_label || "Send Boost";

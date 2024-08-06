@@ -369,9 +369,6 @@
 			amount,
 			customRecords: {
 				"7629169": JSON.stringify(boost),
-				// A random uuid MUST be assigned to 5482373484.
-				"5482373484": uuidv4(),
-				/* 
                     Some Lightning wallets MUST have a customKey and customValue,
                     or the funds will be lost (they'll end up with the Lightning node operator)
                     instead of the intended wallet recipient.
